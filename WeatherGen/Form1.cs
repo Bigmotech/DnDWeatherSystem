@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
 using WeatherGen.WeatherSystem;
 
@@ -10,10 +9,11 @@ namespace WeatherGen
         Random r = new Random();
         private bool flag = false;
         ContainerMap map;
-        WeatherCelliconDisplay[][] l;
+
         public Form1()
         {
             InitializeComponent();
+            pictureBox1.Image = Properties.Resources.texas;
             
         }
         // test commit
@@ -50,35 +50,32 @@ namespace WeatherGen
 
             tableLayoutPanel1.Visible = true;
         }
-        bool firstrun = true;
+
         private void Button2_Click(object sender, EventArgs e)
         {
             if (flag)
             {
-                if (firstrun)
+                tableLayoutPanel1.Visible = false;
+                tableLayoutPanel1.Controls.Clear();
+                WeatherCelliconDisplay[][] l = map.RunFormDay();
+                
+                for (int i = 0; i < l.Length; i++)
                 {
-                    tableLayoutPanel1.Visible = false;
-                    //tableLayoutPanel1.Controls.Clear();
-                    map.RunFormDay(out l);
+                    
 
-                    for (int i = 0; i < l.Length; i++)
+                    for (int j = 0; j < l[i].Length; j++)
                     {
-
-
-                        for (int j = 0; j < l[i].Length; j++)
-                        {
-                            tableLayoutPanel1.Controls.Add(l[i][j], l[i][j].Cell.Coordinates[0], l[i][j].Cell.Coordinates[1]);
-                        }
-
+                        tableLayoutPanel1.Controls.Add(l[i][j], l[i][j].Cell.Coordinates[0], l[i][j].Cell.Coordinates[1]);
                     }
                     
-                    tableLayoutPanel1.Visible = true;
-                    firstrun = false;
                 }
-                else
-                {
-                    map.RunFormDay(out l);
-                }
+
+                //foreach (WeatherControlContainer i in l)
+                //{
+                //     tableLayoutPanel1.Controls.Add(i);
+                //    
+                //}
+                tableLayoutPanel1.Visible = true;
             }
             else
             {
@@ -86,26 +83,44 @@ namespace WeatherGen
             }
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
+            
+            foreach(CellData j in weathers)
+            {
+                WeatherSystem.WeatherSim.RunDay(j);
+            }
+            stopwatch.Stop();
+            MessageBox.Show(stopwatch.ElapsedMilliseconds.ToString());
 
+        }
+        System.Collections.Generic.List<CellData> weathers = new System.Collections.Generic.List<CellData>();
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+            map = new ContainerMap(1000, 1000);
+            
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tableLayoutPanel1_SizeChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Size = tableLayoutPanel1.Size;
+        }
 
         private void open_Temp_Btn_Click(object sender, EventArgs e)
         {
-            //TempStuff temp = new TempStuff();
-           // if(temp.ShowDialog() == DialogResult.OK)
-            //{
+            TempStuff temp = new TempStuff();
+            if(temp.ShowDialog() == DialogResult.OK)
+            {
                 // Do nothing
-            //}
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            for (int i = 0; i < 1001; i++)
-                map.RunFormDay(out l);
-        }
-
-        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
+            }
         }
     }
 }

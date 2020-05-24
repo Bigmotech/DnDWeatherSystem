@@ -107,32 +107,19 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        public void RunFormDay(out WeatherCelliconDisplay[][] displays)
+        public WeatherCelliconDisplay[][] RunFormDay()
         {
             for (int i = 0; i < grid[0]; i++)
             {
                 for (int j = 0; j < grid[1]; j++)
                 {
-                    CheckNeighborsTemp(controlContainers[i][j].Cell);
                     WeatherSim.RunDay(controlContainers[i][j].Cell);
-                    controlContainers[i][j].Cell.CurrentTemp = TempetureGeneration.GenerateTempeture(controlContainers[i][j].Cell);
                 }
             }
             CheckNeighborsRain();
-            CheckNeighborsIncomingRain();
+            CheckNeighborsLoopForm();
             CheckNeighborsToRain();
-            displays = controlContainers;
-        }
-
-        private void CheckNeighborsTemp(CellData cell)
-        {
-            for (int i = 0; i < grid[0]; i++)
-            {
-                for (int j = 0; j < grid[1]; j++)
-                {
-                    //To do check neighboring cells find biggest heat difference and have wind point in that direction.
-                }
-            }
+            return controlContainers;
         }
 
         private void CheckNeighborsRain()
@@ -176,7 +163,7 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        private void CheckNeighborsIncomingRain()
+        private void CheckNeighborsLoopForm()
         {
             for (int i = 0; i < grid[0]; i++)
             {

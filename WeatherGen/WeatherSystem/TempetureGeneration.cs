@@ -14,12 +14,12 @@ namespace WeatherGen.WeatherSystem
         static private Random random = new Random(DateTime.Now.Second.GetHashCode());
         static public int GenerateTempeture(CellData cell)
         {
-                double temp = (Math.Sin((cell.Day / 58.1) - 8) / 2) + .5;
+                double temp = (Math.Sin((day / 58.1) - 8) / 2) + .5;
                 temp = DenormilazedData(temp);
                 double adjust = random.NextDouble();
                 adjust = DenormilazedDataAdjust(adjust);
                 adjust = adjust + temp;
-                return (int)adjust;
+            return (int)adjust;
 
         }
                

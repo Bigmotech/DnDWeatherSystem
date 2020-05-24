@@ -87,7 +87,6 @@
     <Compile Include="WeatherSystem\Explained.Designer.cs">
       <DependentUpon>Explained.cs</DependentUpon>
     </Compile>
-    <Compile Include="WeatherSystem\RestartList.cs" />
     <Compile Include="WeatherSystem\TempetureGeneration.cs" />
     <Compile Include="WeatherSystem\TempGeneration.cs" />
     <Compile Include="WeatherSystem\WeatherCellDisplayInfo.cs" />
