@@ -16,7 +16,7 @@ namespace WeatherGen
             InitializeComponent();
             
         }
-        
+        // test commit
 
         private void Form1_Load(object sender, EventArgs e)
         {
