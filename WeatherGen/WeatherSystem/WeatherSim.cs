@@ -12,7 +12,7 @@ namespace WeatherGen.WeatherSystem
 
 
         // Methods
-        public static WeatherState RunDay(CellData cell)
+        public static WeatherState RunDay( CellData cell)
         {
             cell.TotalRain = 0.0;
             if (cell.FirstDay)
@@ -90,76 +90,26 @@ namespace WeatherGen.WeatherSystem
         }
 
 
-        static public void InitList(CellData cell)
+        static public void InitList( CellData cell)
         {
-            cell.n = new List<WeatherState>()
-            {
-
-                WeatherState.Rain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-                WeatherState.Rain,
-                WeatherState.NoRain,
-            };
+            cell.n = RestartList.defaultWeatherStates;
             cell.WeatherHistory = new List<WeatherState>();
 
         }
 
-        static public void SurroundingRain(CellData cell)
+        static public void SurroundingRain( CellData cell)
         {
             cell.Statechange = WeatherState.Rain;
             cell.chainRain.TryGetProbability(WeatherState.Rain, WeatherState.Rain, out double? probout);
             GetAmountOfRain(cell,probout);
         }
 
-        static public void ZeroIncoming(CellData cell)
+        static public void ZeroIncoming( CellData cell)
         {
             cell.IncomingRain = 0.0;
         }
 
-        static public void GetAmountOfRain(CellData cell,double? ProOfRain)
+        static public void GetAmountOfRain( CellData cell,double? ProOfRain)
         {
             // Using a mixed expnential distribution to retun the amount of rain
             Random random = new Random(DateTime.Now.GetHashCode());
@@ -171,7 +121,7 @@ namespace WeatherGen.WeatherSystem
             SetOutgoingRain(cell);
         }
 
-        static public void SetOutgoingRain(CellData cell)
+        static public void SetOutgoingRain( CellData cell)
         {
             cell.OutgoingRain = 0.0;
             if (cell.LocalRain >= 12)
@@ -181,7 +131,7 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        static public void SetIncomingRain(CellData cell,double incoming)
+        static public void SetIncomingRain( CellData cell,double incoming)
         {
             if (incoming > .3)
             {
@@ -195,14 +145,14 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        static public void Clear_Rain_History(CellData cell)
+        static public void Clear_Rain_History( CellData cell)
         {
             cell.WeatherHistory.Clear();
             MakeDefault(cell);
 
         }
 
-        static public void MakeDefault(CellData cell)
+        static public void MakeDefault( CellData cell)
         {
             cell.chainRain.ClearMarkov();
 
@@ -216,7 +166,7 @@ namespace WeatherGen.WeatherSystem
 
         }
 
-        static public void GetInverseDryToWet(CellData cell)
+        static public void GetInverseDryToWet( CellData cell)
         {
             Accord.Statistics.Distributions.Univariate.InverseGaussianDistribution inverse = new Accord.Statistics.Distributions.Univariate.InverseGaussianDistribution(.5, 1);
             cell.chainRain.TryGetProbability(WeatherState.NoRain, WeatherState.Rain, out double? D2W);
@@ -228,7 +178,7 @@ namespace WeatherGen.WeatherSystem
             cell.InverseNormalCDFDryToWet = inverse.DistributionFunction(crit);
         }
 
-        static public void GetInverseWetToWet(CellData cell)
+        static public void GetInverseWetToWet( CellData cell)
         {
             Accord.Statistics.Distributions.Univariate.InverseGaussianDistribution inverse = new Accord.Statistics.Distributions.Univariate.InverseGaussianDistribution(.5, 1);
             cell.chainRain.TryGetProbability(WeatherState.Rain, WeatherState.Rain, out double? W2W);
@@ -240,7 +190,7 @@ namespace WeatherGen.WeatherSystem
             cell.InverseNormalCDFWetToWet = inverse.DistributionFunction(crit);
         }
 
-        static public WeatherState WetChance(CellData cell)
+        static public WeatherState WetChance( CellData cell)
         {
 
             cell.chainRain.TryGetProbability(WeatherState.Rain, WeatherState.Rain, out double? prob);
@@ -260,7 +210,7 @@ namespace WeatherGen.WeatherSystem
 
         }
 
-        static public WeatherState DryChance(CellData cell)
+        static public WeatherState DryChance( CellData cell)
         {
             cell.chainRain.TryGetProbability(WeatherState.NoRain, WeatherState.Rain, out double? prob);
             cell.RanNum = Accord.Statistics.Distributions.Univariate.NormalDistribution.Random(0.5, 0.2);
@@ -279,7 +229,7 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        static public void AddStateToChain(CellData cell)
+        static public void AddStateToChain( CellData cell)
         {
             cell.chainRain.Add(cell.PrevState, cell.Statechange);
         }
