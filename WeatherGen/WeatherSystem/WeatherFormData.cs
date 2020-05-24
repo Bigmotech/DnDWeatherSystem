@@ -30,7 +30,6 @@ namespace WeatherGen.WeatherSystem
             IncomingText.Text = Cell.IncomingRain.ToString();
             TotalText.Text = Cell.TotalRain.ToString();
             RainLL.Text = ConditionsSystem.RainCondition(Cell.LocalRain);
-            TempLL.Text = Cell.CurrentTemp.ToString();
         }
 
         private void WeatherControl_PropertyChanged(object sender, PropertyChangedEventArgs e)

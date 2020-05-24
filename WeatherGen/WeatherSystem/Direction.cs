@@ -70,16 +70,5 @@ namespace WeatherGen.WeatherSystem
         DarkCloudy,
         Clear
     }
-    public enum Climate
-    {
-        North,
-        Midwest,
-        Costal,
-        Tropical,
-        Dessert,
-        Tundra,
-        Swamp
-    }
-
 
 }

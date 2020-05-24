@@ -13,10 +13,8 @@ namespace WeatherGen
     public class MarkovChain<TKey, TInnerKey>
     {
         Dictionary<TKey, MarkovInnerChain<TInnerKey, TItem<TInnerKey>>> Markov = new Dictionary<TKey, MarkovInnerChain<TInnerKey, TItem<TInnerKey>>>();
-        private List<TItem<TInnerKey>> GetStateAggragatedList = new List<TItem<TInnerKey>>();
-        private List<TItem<TInnerKey>> initial = new List<TItem<TInnerKey>>();
-
-
+        
+        
 
         public MarkovChain()
         {
@@ -32,9 +30,9 @@ namespace WeatherGen
 
             if (Markov.TryGetValue(item, out MarkovInnerChain<TInnerKey, TItem<TInnerKey>> newWorditem))
             {
-                
+                TItem<TInnerKey> wordItem = new TItem<TInnerKey>();
                 newWorditem.PropertyChanged += NewWorditem_PropertyChanged1;
-                if (newWorditem.TryGetValue(chainItem, out TItem<TInnerKey> wordItem))
+                if (newWorditem.TryGetValue(chainItem, out wordItem))
                 {
                     wordItem.Count++;
                     newWorditem.Total = newWorditem.Total + 1;
@@ -107,11 +105,12 @@ namespace WeatherGen
 
         public bool TryGetProbability(TKey KeyState, TInnerKey ValueState, out double? probability)
         {
-            
+            MarkovInnerChain<TInnerKey, TItem<TInnerKey>> outInnerChain = new MarkovInnerChain<TInnerKey, TItem<TInnerKey>>();
+            TItem<TInnerKey> outItem = new TItem<TInnerKey>();
 
-            if (Markov.TryGetValue(KeyState, out MarkovInnerChain<TInnerKey, TItem<TInnerKey>> outInnerChain))
+            if (Markov.TryGetValue(KeyState, out outInnerChain))
             {
-                if(outInnerChain.TryGetValue(ValueState, out TItem<TInnerKey> outItem))
+                if(outInnerChain.TryGetValue(ValueState, out outItem))
                 {
                     probability = outItem.Probability;
                     return true;
@@ -124,16 +123,16 @@ namespace WeatherGen
         }
         public bool TryGetStateAggragateProbabilities(TKey KeyState, out TItem<TInnerKey>[] probability)
         {
-            
-            List<TItem<TInnerKey>> GetStateAggragatedList = new List<TItem<TInnerKey>>();
-            if (Markov.TryGetValue(KeyState, out MarkovInnerChain<TInnerKey, TItem<TInnerKey>> outInnerChain))
+            MarkovInnerChain<TInnerKey, TItem<TInnerKey>> outInnerChain = new MarkovInnerChain<TInnerKey, TItem<TInnerKey>>();
+            List<TItem<TInnerKey>> items = new List<TItem<TInnerKey>>();
+            if (Markov.TryGetValue(KeyState, out outInnerChain))
             {
                 
                 foreach(KeyValuePair<TInnerKey, TItem<TInnerKey>> w in outInnerChain)
                 {
-                    GetStateAggragatedList.Add(w.Value);
+                    items.Add(w.Value);
                 }
-                probability = GetStateAggragatedList.ToArray<TItem<TInnerKey>>();
+                probability = items.ToArray<TItem<TInnerKey>>();
                 
                 return true;
             }
@@ -175,7 +174,7 @@ namespace WeatherGen
 
         public TInnerKey NextState(TKey firstState)
         {
-            
+            List<TItem<TInnerKey>> initial = new List<TItem<TInnerKey>>();
             TryGetStateAggragateProbabilities(firstState, out TItem<TInnerKey>[] items);
             var converted = new List<TItem<TInnerKey>>(items.Length);
             double sum = 0.0;
