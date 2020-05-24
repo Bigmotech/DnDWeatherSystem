@@ -30,7 +30,7 @@ namespace WeatherGen.WeatherSystem
         private Direction _direction;
         private double RanNum;
         private readonly Random random;
-        private int[] Coordinates = new int[2];
+        public int[] Coordinates = new int[2];
         private Temperature _tempDiscription;
         private int _maxTemp;
         private int _minTemp;

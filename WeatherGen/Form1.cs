@@ -13,7 +13,6 @@ namespace WeatherGen
         public Form1()
         {
             InitializeComponent();
-            pictureBox1.Image = Properties.Resources.texas;
             
         }
         // test commit
@@ -116,11 +115,7 @@ namespace WeatherGen
 
         private void open_Temp_Btn_Click(object sender, EventArgs e)
         {
-            TempStuff temp = new TempStuff();
-            if(temp.ShowDialog() == DialogResult.OK)
-            {
-                // Do nothing
-            }
+            
         }
     }
 }
