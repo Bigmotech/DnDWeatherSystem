@@ -7,14 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace WeatherGen.WeatherSystem
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public partial class WeatherCelliconDisplay : UserControl
     {
+        [JsonProperty]
         public CellData Cell;
         public delegate void OutgoingRainEventHandler(object sender, OutgoingRainEventArgs e);
         public event OutgoingRainEventHandler OutgoingRainEvent;
+        [JsonProperty]
         public Color cloudCover { get; set; }
 
         public WeatherCelliconDisplay()
@@ -94,6 +98,7 @@ namespace WeatherGen.WeatherSystem
         {
             OutgoingRainEvent?.Invoke(this, new OutgoingRainEventArgs(Cell));
         }
+
 
     }
 

@@ -7,6 +7,8 @@ using System.Xml;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Reflection;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace WeatherGen
 {
@@ -15,13 +17,13 @@ namespace WeatherGen
         Random r = new Random();
         private bool flag = false;
         ContainerMap map;
+        WorldData world;
         Bitmap mapPic;
-        WeatherCelliconDisplay[][] l;
 
         public Form1()
         {
             InitializeComponent();
-
+            
         }
         // test commit
 
@@ -37,15 +39,15 @@ namespace WeatherGen
 
         private void TableLayoutPanel1_MouseClick(object sender, MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         private void TableLayoutPanel1_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
         {
-            if (l != null)
+            if (world.weatherMap != null)
             {
 
-                using (var b = new SolidBrush(l[e.Row][e.Column].cloudCover))
+                using (var b = new SolidBrush(world.weatherMap[e.Column][e.Row].cloudCover))
                 {
                     e.Graphics.FillRectangle(b, e.CellBounds);
                 }
@@ -56,9 +58,15 @@ namespace WeatherGen
         {
 
 
+            world = new WorldData("TestWorld", (int)CellCount.Value, (int)CellCount.Value);
+            map = new ContainerMap(world);
             LoadCellMap();
+            StartLoad();
+            
+        }
 
-            map = new ContainerMap(tableLayoutPanel1.RowCount, tableLayoutPanel1.ColumnCount);
+        private void StartLoad()
+        {
             flag = true;
             mapBox.Controls.Add(tableLayoutPanel1);
             tableLayoutPanel1.Dock = DockStyle.Fill;
@@ -66,7 +74,6 @@ namespace WeatherGen
             tableLayoutPanel1.BackColor = Color.Transparent;
             UpdateMap();
         }
-
 
         private void LoadCellMap()
         {
@@ -97,14 +104,14 @@ namespace WeatherGen
         {
 
             tableLayoutPanel1.Visible = false;
-            map.RunFormDay(out l);
-            for (int i = 0; i < l.Length; i++)
+            //map.RunFormDay(out world.weatherMap);
+            for (int i = 0; i < world.weatherMap.Length; i++)
             {
 
-                for (int j = 0; j < l[i].Length; j++)
+                for (int j = 0; j < world.weatherMap[i].Length; j++)
                 {
 
-                    tableLayoutPanel1.Controls.Add(l[i][j], l[i][j].Cell.Coordinates[0], l[i][j].Cell.Coordinates[1]);
+                    tableLayoutPanel1.Controls.Add(world.weatherMap[i][j], world.weatherMap[i][j].Cell.Coordinates[0], world.weatherMap[i][j].Cell.Coordinates[1]);
 
                 }
 
@@ -117,7 +124,7 @@ namespace WeatherGen
         {
             if (flag)
             {
-                map.RunFormDay(out l);
+                _ = map.RunFormDay(out world.weatherMap);
                 tableLayoutPanel1.Refresh();
                 
             }
@@ -127,10 +134,29 @@ namespace WeatherGen
             }
         }
 
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            world.SaveWorld();
+        }
 
+        private void Button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                
+                world = JsonConvert.DeserializeObject<WorldData>(File.ReadAllText(@"C: \Users\Test\Desktop\TestWorld.json"));
+                CellCount.Value = world.row;
+                LoadCellMap();
+                map = new ContainerMap(world);
+                StartLoad();
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to load file " + ex.Message);
 
-
-
+            }
+        }
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,17 +9,16 @@ using System.Threading.Tasks;
 
 namespace WeatherGen.WeatherSystem
 {
-    [DataContract]
+    
     public class CellData : System.ComponentModel.INotifyPropertyChanged
     {
 
-
+        [JsonIgnore]
         public MarkovChain<WeatherState, WeatherState> chainRain = new MarkovChain<WeatherState, WeatherState>();
         #region
 
 
         //Fields
-        [DataMember(Name = "WeatherHistory")]
         public List<WeatherState> WeatherHistory;
         public List<WeatherState> n;
         private bool _firstDay = true;
