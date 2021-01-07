@@ -13,8 +13,8 @@ namespace WeatherGen.WeatherSystem
     class WorldData
     {
         public string worldName { get; set; }
+        public string mapPath { get; set; }
         public int currentDay { get; set; }
-        public int MyProperty { get; set; }
         public int row { get; set; }
         public int col { get; set; }
         public WeatherCelliconDisplay[][] weatherMap;
@@ -23,9 +23,10 @@ namespace WeatherGen.WeatherSystem
         {
             
         }
-        public WorldData(string worldName, int row, int col) 
+        public WorldData(string worldName, string mapPath, int row, int col) 
         {
             this.worldName = worldName;
+            this.mapPath = mapPath;
             this.row = row;
             this.col = col;
             weatherMap = new WeatherCelliconDisplay[row][];
