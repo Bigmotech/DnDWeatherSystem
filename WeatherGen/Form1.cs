@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using Newtonsoft.Json;
 using System.IO;
+using WeatherGen.Properties;
 
 namespace WeatherGen
 {
@@ -23,18 +24,32 @@ namespace WeatherGen
         public Form1()
         {
             InitializeComponent();
-            
         }
         // test commit
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            mapPic = new Bitmap(@"C:\Users\Test\Desktop\Map.png");
+            if (File.Exists(Properties.Settings.Default.picturePath))
+            {
+                FitTableToPicture();
+            }
+            else
+            {
+                LoadMap();
+                FitTableToPicture();
+                
+
+            }
+            
+        }
+
+        private void FitTableToPicture()
+        {
+            mapPic = new Bitmap(Properties.Settings.Default.picturePath);
             mapBox.Image = mapPic;
             mapBox.SizeMode = PictureBoxSizeMode.StretchImage;
             tableLayoutPanel1.CellPaint += TableLayoutPanel1_CellPaint;
             tableLayoutPanel1.MouseClick += TableLayoutPanel1_MouseClick;
-
         }
 
         private void TableLayoutPanel1_MouseClick(object sender, MouseEventArgs e)
@@ -52,17 +67,6 @@ namespace WeatherGen
                     e.Graphics.FillRectangle(b, e.CellBounds);
                 }
             }
-        }
-
-        private void Button1_Click(object sender, EventArgs e)
-        {
-
-
-            world = new WorldData("TestWorld", (int)CellCount.Value, (int)CellCount.Value);
-            map = new ContainerMap(world);
-            LoadCellMap();
-            StartLoad();
-            
         }
 
         private void StartLoad()
@@ -120,13 +124,57 @@ namespace WeatherGen
 
         }
 
-        private void Button2_Click(object sender, EventArgs e)
+
+        private void LoadMap()
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.png";
+            dialog.InitialDirectory = @"C:\";
+            dialog.Title = "Please select an image file.";
+
+            switch (dialog.ShowDialog())
+            {
+                case DialogResult.Cancel:
+
+                case DialogResult.No:
+
+                case DialogResult.Abort:
+                    break;
+                case DialogResult.OK:
+                case DialogResult.Yes:
+                    Properties.Settings.Default.picturePath = dialog.FileName;
+                    Properties.Settings.Default.Save();
+                    break;
+            }
+        }
+
+        private void LoadMapToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadMap();
+            FitTableToPicture();
+        }
+
+        private void ResetButton_Click(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+
+        }
+
+        private void LoadWeather_Click(object sender, EventArgs e)
+        {
+            world = new WorldData("TestWorld", Properties.Settings.Default.picturePath, (int)CellCount.Value, (int)CellCount.Value);
+            map = new ContainerMap(world);
+            LoadCellMap();
+            StartLoad();
+        }
+
+        private void RunDayButton_Click(object sender, EventArgs e)
         {
             if (flag)
             {
-                _ = map.RunFormDay(out world.weatherMap);
+                map.RunFormDay(out world.weatherMap);
                 tableLayoutPanel1.Refresh();
-                
+
             }
             else
             {
@@ -134,22 +182,25 @@ namespace WeatherGen
             }
         }
 
-        private void Button3_Click(object sender, EventArgs e)
+        private void SaveMapButton_Click(object sender, EventArgs e)
         {
             world.SaveWorld();
         }
 
-        private void Button4_Click(object sender, EventArgs e)
+        private void LoadMapButton_Click(object sender, EventArgs e)
         {
             try
             {
-                
+
                 world = JsonConvert.DeserializeObject<WorldData>(File.ReadAllText(@"C: \Users\Test\Desktop\TestWorld.json"));
                 CellCount.Value = world.row;
+                Properties.Settings.Default.picturePath = world.mapPath;
+                Properties.Settings.Default.Save();
                 LoadCellMap();
                 map = new ContainerMap(world);
                 StartLoad();
-                
+                FitTableToPicture();
+
             }
             catch (Exception ex)
             {
