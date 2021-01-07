@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using WeatherGen.WeatherSystem;
 
 namespace WeatherGen.WeatherSystem
@@ -36,6 +37,26 @@ namespace WeatherGen.WeatherSystem
         }
 
         private void LoadInMap()
+        {
+            for (int i = 0; i < grid[0]; i++)
+            {
+                for (int j = 0; j < grid[1]; j++)
+                {
+                    controlContainers[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
+                    controlContainers[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
+                    //WeatherSim.RunDay(controlContainers[i][j].Cell);
+                }
+            }
+            for (int i = 0; i < grid[0]; i++)
+            {
+                for (int j = 0; j < grid[1]; j++)
+                {
+                    WeatherSim.RunDay(controlContainers[i][j].Cell);
+                    TempetureGeneration.GenerateTempeture(controlContainers[i][j].Cell);
+                }
+            }
+        }
+        private void LoadSavedMap()
         {
             for (int i = 0; i < grid[0]; i++)
             {
@@ -107,15 +128,23 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        public WeatherCelliconDisplay[][] RunFormDay()
+        public WeatherCelliconDisplay[][] RunFormDay(out WeatherCelliconDisplay[][] IncomingGrid)
         {
-            for (int i = 0; i < grid[0]; i++)
+            //for (int i = 0; i < grid[0]; i++)
+            //{
+            //    for (int j = 0; j < grid[1]; j++)
+            //    {
+            //        WeatherSim.RunDay(controlContainers[i][j].Cell);
+            //    }
+            //}
+            Parallel.ForEach(controlContainers, (cell) =>
             {
-                for (int j = 0; j < grid[1]; j++)
+                Parallel.ForEach(cell, (cellbody) =>
                 {
-                    WeatherSim.RunDay(controlContainers[i][j].Cell);
-                }
-            }
+                    WeatherSim.RunDay(cellbody.Cell);
+                });
+            });
+            IncomingGrid = controlContainers;
             CheckNeighborsRain();
             CheckNeighborsLoopForm();
             CheckNeighborsToRain();
@@ -219,6 +248,10 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
+        public bool Savemap()
+        {
+            return false;
+        }
 
 
     }

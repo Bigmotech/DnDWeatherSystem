@@ -33,23 +33,27 @@
             // 
             // linkLabel1
             // 
+            this.linkLabel1.BackColor = System.Drawing.Color.Transparent;
             this.linkLabel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.linkLabel1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.linkLabel1.Location = new System.Drawing.Point(0, 0);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(20, 20);
+            this.linkLabel1.Size = new System.Drawing.Size(37, 37);
             this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.UseVisualStyleBackColor = true;
+            this.linkLabel1.UseVisualStyleBackColor = false;
             this.linkLabel1.Click += new System.EventHandler(this.linkLabel1_Click);
             // 
             // WeatherCelliconDisplay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.linkLabel1);
+            this.DoubleBuffered = true;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Name = "WeatherCelliconDisplay";
-            this.Size = new System.Drawing.Size(20, 20);
+            this.Size = new System.Drawing.Size(37, 37);
             this.ResumeLayout(false);
 
         }

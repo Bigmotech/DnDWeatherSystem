@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace WeatherGen.WeatherSystem
 {
+    [DataContract]
     public class CellData : System.ComponentModel.INotifyPropertyChanged
     {
 
@@ -16,7 +18,7 @@ namespace WeatherGen.WeatherSystem
 
 
         //Fields
-
+        [DataMember(Name = "WeatherHistory")]
         public List<WeatherState> WeatherHistory;
         public List<WeatherState> n;
         private bool _firstDay = true;
@@ -28,7 +30,7 @@ namespace WeatherGen.WeatherSystem
         private double _outgoingRain;
         private double _totalRain;
         private Direction _direction;
-        private double RanNum;
+        public double RanNum;
         private readonly Random random;
         public int[] Coordinates = new int[2];
         private Temperature _tempDiscription;
@@ -37,6 +39,7 @@ namespace WeatherGen.WeatherSystem
         private bool _surroundedFlag;
         private bool _iscloudy;
         private int _currentTemp;
+        private int _day;
 
         //events
         public event PropertyChangedEventHandler PropertyChanged;
@@ -62,6 +65,8 @@ namespace WeatherGen.WeatherSystem
         public int CurrentTemp { get => _currentTemp; internal set { _currentTemp = value; OnPropertyChanged("CurrentTemp"); } }
         public Direction Direction { get => _direction; internal set { _direction = value; OnPropertyChanged("Direction"); } }
         public bool SurroundedFlag { get => _surroundedFlag; set { _surroundedFlag = value; OnPropertyChanged("SurroundedFlag"); } }
+        public int Day { get => _day; internal set { _day = value; OnPropertyChanged("Day"); } }
+
 
         #endregion
 

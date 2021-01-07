@@ -15,10 +15,13 @@ namespace WeatherGen.WeatherSystem
         public CellData Cell;
         public delegate void OutgoingRainEventHandler(object sender, OutgoingRainEventArgs e);
         public event OutgoingRainEventHandler OutgoingRainEvent;
+        public Color cloudCover { get; set; }
+
         public WeatherCelliconDisplay()
         {
             InitializeComponent();
             Cell = new CellData();
+            this.Visible = false;
         }
         public WeatherCelliconDisplay(CellData cell)
         {
@@ -36,13 +39,13 @@ namespace WeatherGen.WeatherSystem
                     switch (Cell.Statechange)
                     {
                         case WeatherState.NoRain:
-                            linkLabel1.Image = new Bitmap(Properties.Resources.sunny, linkLabel1.Size);
-                            this.BackColor = Color.FromArgb(100, Color.Transparent);
+                            //linkLabel1.Image = new Bitmap(Properties.Resources.sunny, linkLabel1.Size);
+                            cloudCover = Color.Transparent;
 
                             break;
                         case WeatherState.Rain:
-                            linkLabel1.Image = new Bitmap(WeatherGen.Properties.Resources.rainnyday, linkLabel1.Size);
-                            this.BackColor = Color.FromArgb(50, Color.DeepSkyBlue);
+                            //linkLabel1.Image = new Bitmap(WeatherGen.Properties.Resources.rainnyday, linkLabel1.Size);
+                            cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
                             break;
 
                     }

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace WeatherGen.WeatherSystem
 {
-    class TempGeneration
+    class WorldData
     {
+        public string worldName { get; set; }
+        public int currentDay { get; set; }
+        public int MyProperty { get; set; }
+
     }
 }
