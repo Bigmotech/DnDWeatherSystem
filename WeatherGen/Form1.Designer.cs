@@ -35,6 +35,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.CellCount = new System.Windows.Forms.NumericUpDown();
             this.mapBox = new System.Windows.Forms.PictureBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CellCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapBox)).BeginInit();
             this.SuspendLayout();
@@ -101,12 +103,34 @@
             this.mapBox.TabIndex = 8;
             this.mapBox.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(62, 198);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(142, 35);
+            this.button3.TabIndex = 9;
+            this.button3.Text = "Save Map";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.Button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(62, 249);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(138, 46);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "button4";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.Button4_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ClientSize = new System.Drawing.Size(1398, 903);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
             this.Controls.Add(this.CellCount);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.button2);
@@ -131,6 +155,8 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.NumericUpDown CellCount;
         private System.Windows.Forms.PictureBox mapBox;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
     }
 }
 

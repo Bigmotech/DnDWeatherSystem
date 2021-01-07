@@ -7,72 +7,51 @@ namespace WeatherGen.WeatherSystem
     class ContainerMap
     {
 
-        private readonly int[] grid = new int[2];
+
         private readonly Random r = new Random(DateTime.Today.GetHashCode());
-        private readonly WeatherCelliconDisplay[][] controlContainers;
+        private readonly WorldData worldMap;
 
-        public ContainerMap(int row, int col)
-        {
-            grid[0] = row;
-            grid[1] = col;
-            controlContainers = new WeatherCelliconDisplay[grid[0]][];
-            LoadArray();
+        public ContainerMap(WorldData world)
+        { 
+            worldMap = world;
             LoadInMap();
-        }
-
-
-        public ContainerMap(int[] coords)
-        {
-            grid = coords;
-            controlContainers = new WeatherCelliconDisplay[grid[0]][];
-            LoadArray();
-            LoadInMap();
-
-        }
-
-        private void LoadArray()
-        {
-            for (int i = 0; i < controlContainers.Length; i++)
-                controlContainers[i] = new WeatherCelliconDisplay[grid[1]];
         }
 
         private void LoadInMap()
         {
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.col; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
-                    controlContainers[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
-                    controlContainers[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
-                    //WeatherSim.RunDay(controlContainers[i][j].Cell);
+                    worldMap.weatherMap[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
+                    worldMap.weatherMap[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
                 }
             }
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.col; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
-                    WeatherSim.RunDay(controlContainers[i][j].Cell);
-                    TempetureGeneration.GenerateTempeture(controlContainers[i][j].Cell);
+                    WeatherSim.RunDay(worldMap.weatherMap[i][j].Cell);
+                    TempetureGeneration.GenerateTempeture(worldMap.weatherMap[i][j].Cell);
                 }
             }
         }
         private void LoadSavedMap()
         {
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.col; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
-                    controlContainers[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
-                    controlContainers[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
-                    //WeatherSim.RunDay(controlContainers[i][j].Cell);
+                    worldMap.weatherMap[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
+                    worldMap.weatherMap[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
                 }
             }
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.row; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
-                    WeatherSim.RunDay(controlContainers[i][j].Cell);
-                    TempetureGeneration.GenerateTempeture(controlContainers[i][j].Cell);
+                    WeatherSim.RunDay(worldMap.weatherMap[i][j].Cell);
+                    TempetureGeneration.GenerateTempeture(worldMap.weatherMap[i][j].Cell);
                 }
             }
         }
@@ -80,48 +59,48 @@ namespace WeatherGen.WeatherSystem
         private void ContainerMap_OutgoingRainEvent1(object sender, OutgoingRainEventArgs e)
         {
 
-            double outgoing = controlContainers[e.Row][e.Column].Cell.OutgoingRain / 4;
+            double outgoing = worldMap.weatherMap[e.Row][e.Column].Cell.OutgoingRain / 4;
 
             if (outgoing > .3)
             {
                 if (e.Row - 1 >= 0)
                     try
                     {
-                        WeatherSim.SetIncomingRain(controlContainers[e.Row - 1][e.Column].Cell, outgoing);
+                        WeatherSim.SetIncomingRain(worldMap.weatherMap[e.Row - 1][e.Column].Cell, outgoing);
                     }
                     catch (NullReferenceException ex)
                     {
-                        controlContainers[e.Row - 1][e.Column].Cell = new CellData(r, e.Row, e.Column);
+                        worldMap.weatherMap[e.Row - 1][e.Column].Cell = new CellData(r, e.Row, e.Column);
                         Console.WriteLine(ex.Message);
                     }
-                if (e.Row + 1 < grid[0])
+                if (e.Row + 1 < worldMap.row)
                     try
                     {
-                        WeatherSim.SetIncomingRain(controlContainers[e.Row + 1][e.Column].Cell, outgoing);
+                        WeatherSim.SetIncomingRain(worldMap.weatherMap[e.Row + 1][e.Column].Cell, outgoing);
                     }
                     catch (NullReferenceException ex)
                     {
-                        controlContainers[e.Row + 1][e.Column].Cell = new CellData(r, e.Row, e.Column);
+                        worldMap.weatherMap[e.Row + 1][e.Column].Cell = new CellData(r, e.Row, e.Column);
                         Console.WriteLine(ex.Message);
                     }
                 if (e.Column - 1 >= 0)
                     try
                     {
-                        WeatherSim.SetIncomingRain(controlContainers[e.Row][e.Column - 1].Cell, outgoing);
+                        WeatherSim.SetIncomingRain(worldMap.weatherMap[e.Row][e.Column - 1].Cell, outgoing);
                     }
                     catch (NullReferenceException ex)
                     {
-                        controlContainers[e.Row][e.Column - 1].Cell = new CellData(r, e.Row, e.Column);
+                        worldMap.weatherMap[e.Row][e.Column - 1].Cell = new CellData(r, e.Row, e.Column);
                         Console.WriteLine(ex.Message);
                     }
-                if (e.Column + 1 < grid[0])
+                if (e.Column + 1 < worldMap.row)
                     try
                     {
-                        WeatherSim.SetIncomingRain(controlContainers[e.Row][e.Column + 1].Cell, outgoing);
+                        WeatherSim.SetIncomingRain(worldMap.weatherMap[e.Row][e.Column + 1].Cell, outgoing);
                     }
                     catch (NullReferenceException ex)
                     {
-                        controlContainers[e.Row][e.Column + 1].Cell = new CellData(r, e.Row, e.Column);
+                        worldMap.weatherMap[e.Row][e.Column + 1].Cell = new CellData(r, e.Row, e.Column);
                         Console.WriteLine(ex.Message);
                     }
 
@@ -130,49 +109,43 @@ namespace WeatherGen.WeatherSystem
 
         public WeatherCelliconDisplay[][] RunFormDay(out WeatherCelliconDisplay[][] IncomingGrid)
         {
-            //for (int i = 0; i < grid[0]; i++)
-            //{
-            //    for (int j = 0; j < grid[1]; j++)
-            //    {
-            //        WeatherSim.RunDay(controlContainers[i][j].Cell);
-            //    }
-            //}
-            Parallel.ForEach(controlContainers, (cell) =>
+
+            Parallel.ForEach(worldMap.weatherMap, (cell) =>
             {
                 Parallel.ForEach(cell, (cellbody) =>
                 {
                     WeatherSim.RunDay(cellbody.Cell);
                 });
             });
-            IncomingGrid = controlContainers;
+            IncomingGrid = worldMap.weatherMap;
             CheckNeighborsRain();
             CheckNeighborsLoopForm();
             CheckNeighborsToRain();
-            return controlContainers;
+            return worldMap.weatherMap;
         }
 
         private void CheckNeighborsRain()
         {
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.row; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
                     bool n, s, e, w;
                     if (i - 1 >= 0)
-                        n = controlContainers[i - 1][j].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
+                        n = worldMap.weatherMap[i - 1][j].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
                     else
                         n = false;
-                    if (i + 1 < grid[0])
-                        s = controlContainers[i + 1][j].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
+                    if (i + 1 < worldMap.row)
+                        s = worldMap.weatherMap[i + 1][j].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
                     else
                         s = false;
 
                     if (j - 1 >= 0)
-                        e = controlContainers[i][j - 1].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
+                        e = worldMap.weatherMap[i][j - 1].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
                     else
                         e = false;
-                    if (j + 1 < grid[0])
-                        w = controlContainers[i][j + 1].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
+                    if (j + 1 < worldMap.row)
+                        w = worldMap.weatherMap[i][j + 1].Cell.Statechange == WeatherSystem.WeatherState.Rain ? true : false;
                     else
                         w = false;
 
@@ -181,11 +154,11 @@ namespace WeatherGen.WeatherSystem
                             + (e ? 1 : 0)
                             + (w ? 1 : 0) > 1)
                     {
-                        controlContainers[i][j].Cell.IsCloudy = true;
+                        worldMap.weatherMap[i][j].Cell.IsCloudy = true;
                     }
                     else
                     {
-                        controlContainers[i][j].Cell.IsCloudy = false;
+                        worldMap.weatherMap[i][j].Cell.IsCloudy = false;
                     }
 
                 }
@@ -194,23 +167,23 @@ namespace WeatherGen.WeatherSystem
 
         private void CheckNeighborsLoopForm()
         {
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.row; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
 
-                    double outgoing = controlContainers[i][j].Cell.OutgoingRain / 4;
+                    double outgoing = worldMap.weatherMap[i][j].Cell.OutgoingRain / 4;
 
                     if (outgoing > .3)
                     {
                         if (i - 1 >= 0)
-                            WeatherSim.SetIncomingRain(controlContainers[i - 1][j].Cell, outgoing);
-                        if (i + 1 < grid[0])
-                            WeatherSim.SetIncomingRain(controlContainers[i + 1][j].Cell, outgoing);
+                            WeatherSim.SetIncomingRain(worldMap.weatherMap[i - 1][j].Cell, outgoing);
+                        if (i + 1 < worldMap.row)
+                            WeatherSim.SetIncomingRain(worldMap.weatherMap[i + 1][j].Cell, outgoing);
                         if (j - 1 >= 0)
-                            WeatherSim.SetIncomingRain(controlContainers[i][j - 1].Cell, outgoing);
-                        if (j + 1 < grid[0])
-                            WeatherSim.SetIncomingRain(controlContainers[i][j + 1].Cell, outgoing);
+                            WeatherSim.SetIncomingRain(worldMap.weatherMap[i][j - 1].Cell, outgoing);
+                        if (j + 1 < worldMap.row)
+                            WeatherSim.SetIncomingRain(worldMap.weatherMap[i][j + 1].Cell, outgoing);
                     }
                 }
             }
@@ -219,30 +192,30 @@ namespace WeatherGen.WeatherSystem
 
         private void CheckNeighborsToRain()
         {
-            for (int i = 0; i < grid[0]; i++)
+            for (int i = 0; i < worldMap.row; i++)
             {
-                for (int j = 0; j < grid[1]; j++)
+                for (int j = 0; j < worldMap.col; j++)
                 {
                     bool north, south, east, west;
                     north = south = east = west = false;
 
                     if (i - 1 >= 0)
-                        if (controlContainers[i - 1][j].Cell.LocalRain > 0)
+                        if (worldMap.weatherMap[i - 1][j].Cell.LocalRain > 0)
                             north = true;
-                    if (i + 1 < grid[0])
-                        if (controlContainers[i + 1][j].Cell.LocalRain > 0)
+                    if (i + 1 < worldMap.row)
+                        if (worldMap.weatherMap[i + 1][j].Cell.LocalRain > 0)
                             south = true;
                     if (j - 1 > 0)
-                        if (controlContainers[i][j - 1].Cell.LocalRain > 0)
+                        if (worldMap.weatherMap[i][j - 1].Cell.LocalRain > 0)
                             west = true;
-                    if (j + 1 < grid[1])
-                        if (controlContainers[i][j + 1].Cell.LocalRain > 0)
+                    if (j + 1 < worldMap.col)
+                        if (worldMap.weatherMap[i][j + 1].Cell.LocalRain > 0)
                             east = true;
 
-                    if (north && south && east && west && ((controlContainers[i - 1][j].Cell.LocalRain +
-                        controlContainers[i + 1][j].Cell.LocalRain + controlContainers[i][j - 1].Cell.LocalRain
-                        + controlContainers[i][j + 1].Cell.LocalRain) > 5))
-                        WeatherSim.SurroundingRain(controlContainers[i][j].Cell);
+                    if (north && south && east && west && ((worldMap.weatherMap[i - 1][j].Cell.LocalRain +
+                        worldMap.weatherMap[i + 1][j].Cell.LocalRain + worldMap.weatherMap[i][j - 1].Cell.LocalRain
+                        + worldMap.weatherMap[i][j + 1].Cell.LocalRain) > 5))
+                        WeatherSim.SurroundingRain(worldMap.weatherMap[i][j].Cell);
 
                 }
             }
