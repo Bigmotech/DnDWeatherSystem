@@ -175,6 +175,7 @@ namespace WeatherGen
             {
                 map.RunFormDay(out world.weatherMap);
                 tableLayoutPanel1.Refresh();
+                Datelabel.Text = world.GetCurrentDayYear();
 
             }
             else
@@ -186,7 +187,7 @@ namespace WeatherGen
         private void SaveMapButton_Click(object sender, EventArgs e)
         {
             if (flag)
-                world.SaveWorld();
+                world.SaveWorld(Properties.Settings.Default.currentWorldPath);
             else
                 MessageBox.Show("Please load a map first");
         }
@@ -213,6 +214,7 @@ namespace WeatherGen
                     case DialogResult.Yes:
                         world = JsonConvert.DeserializeObject<WorldData>(File.ReadAllText(dialog.FileName));
                         CellCount.Value = world.row;
+                        Properties.Settings.Default.currentWorldPath = dialog.FileName;
                         Properties.Settings.Default.picturePath = world.mapPath;
                         Properties.Settings.Default.Save();
                         LoadCellMap();
@@ -239,6 +241,11 @@ namespace WeatherGen
         private void ClearPicBoxButton_Click(object sender, EventArgs e)
         {
             LoadCellMap();
+        }
+
+        private void NewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

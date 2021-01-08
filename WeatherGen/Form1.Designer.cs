@@ -34,10 +34,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -51,17 +48,16 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ClearPicBoxButton = new System.Windows.Forms.Button();
-            this.SaveAsMapButton = new System.Windows.Forms.Button();
-            this.resetPropsButton = new System.Windows.Forms.Button();
-            this.LoadMapButton = new System.Windows.Forms.Button();
-            this.saveMapButton = new System.Windows.Forms.Button();
             this.CellCount = new System.Windows.Forms.NumericUpDown();
             this.runDayButton = new System.Windows.Forms.Button();
             this.LoadWeather = new System.Windows.Forms.Button();
-            this.mapBox = new System.Windows.Forms.PictureBox();
             this.uploadMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.mapBox = new System.Windows.Forms.PictureBox();
+            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Datelabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CellCount)).BeginInit();
@@ -118,40 +114,10 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(62, 34);
             this.fileToolStripMenuItem.Text = "&File";
             // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
-            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
-            this.newToolStripMenuItem.Text = "&New";
-            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
-            // 
-            // openToolStripMenuItem
-            // 
-            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
-            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
-            this.openToolStripMenuItem.Text = "&Open World";
-            this.openToolStripMenuItem.Click += new System.EventHandler(this.LoadMapButton_Click);
-            // 
             // toolStripSeparator
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(315, 6);
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
-            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
-            this.saveToolStripMenuItem.Text = "&Save";
-            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveMapButton_Click);
             // 
             // saveAsToolStripMenuItem
             // 
@@ -183,13 +149,13 @@
             // customizeToolStripMenuItem
             // 
             this.customizeToolStripMenuItem.Name = "customizeToolStripMenuItem";
-            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
+            this.customizeToolStripMenuItem.Size = new System.Drawing.Size(228, 40);
             this.customizeToolStripMenuItem.Text = "&Customize";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(315, 40);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(228, 40);
             this.optionsToolStripMenuItem.Text = "&Options";
             // 
             // helpToolStripMenuItem
@@ -235,11 +201,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.ClearPicBoxButton);
-            this.panel1.Controls.Add(this.SaveAsMapButton);
-            this.panel1.Controls.Add(this.resetPropsButton);
-            this.panel1.Controls.Add(this.LoadMapButton);
-            this.panel1.Controls.Add(this.saveMapButton);
+            this.panel1.Controls.Add(this.Datelabel);
             this.panel1.Controls.Add(this.CellCount);
             this.panel1.Controls.Add(this.runDayButton);
             this.panel1.Controls.Add(this.LoadWeather);
@@ -249,56 +211,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1398, 865);
             this.panel1.TabIndex = 12;
-            // 
-            // ClearPicBoxButton
-            // 
-            this.ClearPicBoxButton.Location = new System.Drawing.Point(15, 469);
-            this.ClearPicBoxButton.Name = "ClearPicBoxButton";
-            this.ClearPicBoxButton.Size = new System.Drawing.Size(138, 64);
-            this.ClearPicBoxButton.TabIndex = 19;
-            this.ClearPicBoxButton.Text = "Reset Box";
-            this.ClearPicBoxButton.UseVisualStyleBackColor = true;
-            this.ClearPicBoxButton.Click += new System.EventHandler(this.ClearPicBoxButton_Click);
-            // 
-            // SaveAsMapButton
-            // 
-            this.SaveAsMapButton.Location = new System.Drawing.Point(15, 274);
-            this.SaveAsMapButton.Name = "SaveAsMapButton";
-            this.SaveAsMapButton.Size = new System.Drawing.Size(138, 65);
-            this.SaveAsMapButton.TabIndex = 18;
-            this.SaveAsMapButton.Text = "Save Map As";
-            this.SaveAsMapButton.UseVisualStyleBackColor = true;
-            this.SaveAsMapButton.Click += new System.EventHandler(this.SaveAsMapButton_Click);
-            // 
-            // resetPropsButton
-            // 
-            this.resetPropsButton.Location = new System.Drawing.Point(15, 415);
-            this.resetPropsButton.Name = "resetPropsButton";
-            this.resetPropsButton.Size = new System.Drawing.Size(138, 47);
-            this.resetPropsButton.TabIndex = 17;
-            this.resetPropsButton.Text = "Reset Props";
-            this.resetPropsButton.UseVisualStyleBackColor = true;
-            this.resetPropsButton.Click += new System.EventHandler(this.ResetButton_Click);
-            // 
-            // LoadMapButton
-            // 
-            this.LoadMapButton.Location = new System.Drawing.Point(15, 345);
-            this.LoadMapButton.Name = "LoadMapButton";
-            this.LoadMapButton.Size = new System.Drawing.Size(138, 64);
-            this.LoadMapButton.TabIndex = 16;
-            this.LoadMapButton.Text = "Load Map";
-            this.LoadMapButton.UseVisualStyleBackColor = true;
-            this.LoadMapButton.Click += new System.EventHandler(this.LoadMapButton_Click);
-            // 
-            // saveMapButton
-            // 
-            this.saveMapButton.Location = new System.Drawing.Point(15, 202);
-            this.saveMapButton.Name = "saveMapButton";
-            this.saveMapButton.Size = new System.Drawing.Size(138, 66);
-            this.saveMapButton.TabIndex = 15;
-            this.saveMapButton.Text = "Save World";
-            this.saveMapButton.UseVisualStyleBackColor = true;
-            this.saveMapButton.Click += new System.EventHandler(this.SaveMapButton_Click);
             // 
             // CellCount
             // 
@@ -330,6 +242,18 @@
             this.LoadWeather.UseVisualStyleBackColor = true;
             this.LoadWeather.Click += new System.EventHandler(this.LoadWeather_Click);
             // 
+            // uploadMapToolStripMenuItem
+            // 
+            this.uploadMapToolStripMenuItem.Name = "uploadMapToolStripMenuItem";
+            this.uploadMapToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
+            this.uploadMapToolStripMenuItem.Text = "Upload Map";
+            this.uploadMapToolStripMenuItem.Click += new System.EventHandler(this.LoadMapToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(315, 6);
+            // 
             // mapBox
             // 
             this.mapBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -342,17 +266,44 @@
             this.mapBox.TabIndex = 14;
             this.mapBox.TabStop = false;
             // 
-            // uploadMapToolStripMenuItem
+            // newToolStripMenuItem
             // 
-            this.uploadMapToolStripMenuItem.Name = "uploadMapToolStripMenuItem";
-            this.uploadMapToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
-            this.uploadMapToolStripMenuItem.Text = "Upload Map";
-            this.uploadMapToolStripMenuItem.Click += new System.EventHandler(this.LoadMapToolStripMenuItem_Click);
+            this.newToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripMenuItem.Image")));
+            this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
+            this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
+            this.newToolStripMenuItem.Text = "&New";
+            this.newToolStripMenuItem.Click += new System.EventHandler(this.NewToolStripMenuItem_Click);
             // 
-            // toolStripSeparator6
+            // openToolStripMenuItem
             // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(315, 6);
+            this.openToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripMenuItem.Image")));
+            this.openToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
+            this.openToolStripMenuItem.Text = "&Open World";
+            this.openToolStripMenuItem.Click += new System.EventHandler(this.LoadMapButton_Click);
+            // 
+            // saveToolStripMenuItem
+            // 
+            this.saveToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripMenuItem.Image")));
+            this.saveToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
+            this.saveToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveToolStripMenuItem.Size = new System.Drawing.Size(318, 40);
+            this.saveToolStripMenuItem.Text = "&Save";
+            this.saveToolStripMenuItem.Click += new System.EventHandler(this.SaveMapButton_Click);
+            // 
+            // Datelabel
+            // 
+            this.Datelabel.AutoSize = true;
+            this.Datelabel.Location = new System.Drawing.Point(12, 212);
+            this.Datelabel.Name = "Datelabel";
+            this.Datelabel.Size = new System.Drawing.Size(64, 25);
+            this.Datelabel.TabIndex = 15;
+            this.Datelabel.Text = "label1";
             // 
             // Form1
             // 
@@ -370,6 +321,7 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.CellCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mapBox)).EndInit();
             this.ResumeLayout(false);
@@ -400,17 +352,13 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button LoadMapButton;
-        private System.Windows.Forms.Button saveMapButton;
         private System.Windows.Forms.NumericUpDown CellCount;
         private System.Windows.Forms.Button runDayButton;
         private System.Windows.Forms.Button LoadWeather;
         private System.Windows.Forms.PictureBox mapBox;
-        private System.Windows.Forms.Button resetPropsButton;
-        private System.Windows.Forms.Button SaveAsMapButton;
-        private System.Windows.Forms.Button ClearPicBoxButton;
         private System.Windows.Forms.ToolStripMenuItem uploadMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.Label Datelabel;
     }
 }
 

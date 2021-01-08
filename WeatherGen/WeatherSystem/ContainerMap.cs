@@ -117,6 +117,7 @@ namespace WeatherGen.WeatherSystem
                     WeatherSim.RunDay(cellbody.Cell);
                 });
             });
+            worldMap.currentDay++;
             IncomingGrid = worldMap.weatherMap;
             CheckNeighborsRain();
             CheckNeighborsLoopForm();

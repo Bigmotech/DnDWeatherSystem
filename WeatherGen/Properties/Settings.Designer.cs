@@ -46,5 +46,17 @@ namespace WeatherGen.Properties {
                 this["picturePath"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string currentWorldPath {
+            get {
+                return ((string)(this["currentWorldPath"]));
+            }
+            set {
+                this["currentWorldPath"] = value;
+            }
+        }
     }
 }

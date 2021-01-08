@@ -12,9 +12,11 @@ namespace WeatherGen.WeatherSystem
 {
     class WorldData
     {
+        private int _currentDay;
         public string worldName { get; set; }
         public string mapPath { get; set; }
-        public int currentDay { get; set; }
+        public int currentDay { get { return _currentDay; } set { _currentDay = value; if (_currentDay == 365) { _currentDay = 0; currentYear++; } } }
+        public int currentYear { get; set; }
         public int row { get; set; }
         public int col { get; set; }
         public WeatherCelliconDisplay[][] weatherMap;
@@ -58,42 +60,64 @@ namespace WeatherGen.WeatherSystem
         }
 
 
-        public bool SaveWorld()
+        public bool SaveWorld(string filePath)
         {
-
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.Filter = "World Json (*.json) | *.json;";
-            dialog.Title = "Please select a World Json.";
-
-
-            try
+            if(!File.Exists(filePath))
             {
 
-                switch (dialog.ShowDialog())
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.Filter = "World Json (*.json) | *.json;";
+                dialog.Title = "Please select a World Json.";
+
+
+                try
                 {
-                    case DialogResult.Cancel:
 
-                    case DialogResult.No:
+                    switch (dialog.ShowDialog())
+                    {
+                        case DialogResult.Cancel:
 
-                    case DialogResult.Abort:
+                        case DialogResult.No:
 
-                        MessageBox.Show("Nothing was Saved");
+                        case DialogResult.Abort:
 
-                        break;
-                    case DialogResult.OK:
-                    case DialogResult.Yes:
+                            MessageBox.Show("Nothing was Saved");
+
+                            break;
+                        case DialogResult.OK:
+                        case DialogResult.Yes:
                             File.WriteAllText(dialog.FileName, JsonConvert.SerializeObject(this));
-                        
-                        break;
+
+                            break;
+                    }
                 }
-            }catch(Exception e)
-            {
-                MessageBox.Show("failed to save \n" + e.Message);
-                return false;
+                catch (Exception e)
+                {
+                    MessageBox.Show("failed to save \n" + e.Message);
+                    return false;
+                }
+
+
+                return true;
             }
-            
-            
-            return true;
+            else
+            {
+                try
+                {
+                File.WriteAllText(filePath, JsonConvert.SerializeObject(this));
+                    return true;
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return false;
+                }
+            }
+        }
+
+        public string GetCurrentDayYear()
+        {
+            return "Year: " + currentYear.ToString() + " Day: " + currentDay.ToString();
         }
 
 

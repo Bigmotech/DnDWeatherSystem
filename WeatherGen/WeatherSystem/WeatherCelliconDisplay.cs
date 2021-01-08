@@ -26,11 +26,15 @@ namespace WeatherGen.WeatherSystem
             InitializeComponent();
             Cell = new CellData();
             this.Visible = false;
+            
             this.Dock = DockStyle.Fill;
         }
         public WeatherCelliconDisplay(CellData cell)
         {
             InitializeComponent();
+            this.ForeColor = Color.FromArgb(120, 255, 255, 255);
+            linkLabel1.FlatAppearance.BorderColor = Color.FromArgb(120, 255, 255, 255);
+            linkLabel1.FlatAppearance.MouseOverBackColor = Color.FromArgb(80, 255, 255, 255);
             Cell = cell;
             Cell.PropertyChanged += ControlForm_PropertyChanged;
         }
