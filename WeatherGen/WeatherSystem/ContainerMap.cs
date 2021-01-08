@@ -16,7 +16,6 @@ namespace WeatherGen.WeatherSystem
             worldMap = world;
             LoadInMap();
         }
-
         private void LoadInMap()
         {
             for (int i = 0; i < worldMap.col; i++)
@@ -36,6 +35,7 @@ namespace WeatherGen.WeatherSystem
                 }
             }
         }
+
         private void LoadSavedMap()
         {
             for (int i = 0; i < worldMap.col; i++)

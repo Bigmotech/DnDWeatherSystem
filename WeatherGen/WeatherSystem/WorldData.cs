@@ -33,9 +33,10 @@ namespace WeatherGen.WeatherSystem
             LoadArray();
 
         }
-        public WorldData(string worldName, int[] gridSize) 
+        public WorldData(string worldName, string mapPath, int[] gridSize) 
         {
             this.worldName = worldName;
+            this.mapPath = mapPath;
             row = gridSize[0];
             col = gridSize[1];
             weatherMap = new WeatherCelliconDisplay[gridSize[0]][];
@@ -60,10 +61,31 @@ namespace WeatherGen.WeatherSystem
         public bool SaveWorld()
         {
 
-            
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "World Json (*.json) | *.json;";
+            dialog.Title = "Please select a World Json.";
+
+
             try
             {
-                File.WriteAllText(@"C:\Users\Test\Desktop\" + worldName+".json", JsonConvert.SerializeObject(this));
+
+                switch (dialog.ShowDialog())
+                {
+                    case DialogResult.Cancel:
+
+                    case DialogResult.No:
+
+                    case DialogResult.Abort:
+
+                        MessageBox.Show("Nothing was Saved");
+
+                        break;
+                    case DialogResult.OK:
+                    case DialogResult.Yes:
+                            File.WriteAllText(dialog.FileName, JsonConvert.SerializeObject(this));
+                        
+                        break;
+                }
             }catch(Exception e)
             {
                 MessageBox.Show("failed to save \n" + e.Message);
