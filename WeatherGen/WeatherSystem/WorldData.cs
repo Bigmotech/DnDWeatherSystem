@@ -33,6 +33,8 @@ namespace WeatherGen.WeatherSystem
             this.col = col;
             weatherMap = new WeatherCelliconDisplay[row][];
             LoadArray();
+            WeatherGen.WeatherSystem.ContainerMap container = new ContainerMap(this);
+          
 
         }
         public WorldData(string worldName, string mapPath, int[] gridSize) 
