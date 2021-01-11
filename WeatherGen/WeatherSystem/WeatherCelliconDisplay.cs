@@ -26,10 +26,15 @@ namespace WeatherGen.WeatherSystem
             InitializeComponent();
             Cell = new CellData();
             this.Visible = false;
+            
+            this.Dock = DockStyle.Fill;
         }
         public WeatherCelliconDisplay(CellData cell)
         {
             InitializeComponent();
+            this.ForeColor = Color.FromArgb(120, 255, 255, 255);
+            linkLabel1.FlatAppearance.BorderColor = Color.FromArgb(120, 255, 255, 255);
+            linkLabel1.FlatAppearance.MouseOverBackColor = Color.FromArgb(80, 255, 255, 255);
             Cell = cell;
             Cell.PropertyChanged += ControlForm_PropertyChanged;
         }
@@ -58,7 +63,7 @@ namespace WeatherGen.WeatherSystem
                 case "FirstDay":
                     break;
                 case "IsCloudy":
-                    linkLabel1.BackColor = Color.FromArgb(50, Color.LightGray);
+                    this.BackColor = Color.FromArgb(50, Color.LightGray);
                     break;
                 case "TempDiscription":
                     break;
@@ -98,8 +103,6 @@ namespace WeatherGen.WeatherSystem
         {
             OutgoingRainEvent?.Invoke(this, new OutgoingRainEventArgs(Cell));
         }
-
-
     }
 
     public class OutgoingRainEventArgs : EventArgs
