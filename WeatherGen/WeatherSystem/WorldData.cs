@@ -33,7 +33,7 @@ namespace WeatherGen.WeatherSystem
             this.col = col;
             weatherMap = new WeatherCelliconDisplay[row][];
             LoadArray();
-            WeatherGen.WeatherSystem.ContainerMap container = new ContainerMap(this);
+            WeatherGen.WeatherSystem.ContainerMap container = new ContainerMap(this, true);
           
 
         }
@@ -46,6 +46,7 @@ namespace WeatherGen.WeatherSystem
             weatherMap = new WeatherCelliconDisplay[gridSize[0]][];
             LoadArray();
         }
+
         public WorldData(WorldData world)
         {
             worldName = world.worldName;

@@ -108,9 +108,46 @@ namespace WeatherGen.WeatherSystem
             throw new NotImplementedException();
         }
 
-        internal static string TempCondition(object tempRange)
+        internal static string TempCondition(int temp)
         {
-            throw new NotImplementedException();
+            if(temp <= 0)
+            {
+                return "Extremely Cold, Creatures exposed to the cold must succeed on a DC 10 Con Save\n" + 
+                        "at the end of each hour or gain 1 level of exhaustion. Creatures with resistance\n" + 
+                        "or immunity to cold damage automatically succeed as do creatues who are adpat to cold climates.\n" + 
+                        "Creatures wearing cold weather gear makes the save at the end of the day";
+            }
+            else if(temp > 0 && temp <= 41)
+            {
+                return "It is cold";
+            }
+            else if(temp > 41 && temp <= 50)
+            {
+                return "It is cool";
+            }
+            else if(temp > 50 && temp <= 70)
+            {
+                return "It is fair";
+            }
+            else if(temp > 70 && temp <= 77)
+            {
+                return "It is hot";
+            }
+            else if(temp > 77 && temp <= 99)
+            {
+                return "it is very hot";
+            }
+            else if(temp >= 100)
+            {
+                return "Extremely Hot, Creatures exposed to the heat without access to dinkable water\n" + 
+                    "must succeed on a Con Save at the end of each hour or gain 1 level of exhaustion.\n" + 
+                    "DC 5 for the first and increases by 1 for each hour after. If a creature drinks water the DC says the same.\n" + 
+                    "Creatures with resistance or immunity to fire damage automatically succeed as do creatures who are adapted to hot climates.";
+            }
+            else
+            {
+                return "What happened?";
+            }
         }
 
         internal static string WindCondition(object tempRange)

@@ -13,7 +13,7 @@ namespace WeatherGen.WeatherSystem
     public class CellData : System.ComponentModel.INotifyPropertyChanged
     {
 
-        [JsonIgnore]
+        
         public MarkovChain<WeatherState, WeatherState> chainRain = new MarkovChain<WeatherState, WeatherState>();
         #region
 
@@ -73,7 +73,8 @@ namespace WeatherGen.WeatherSystem
         //Consturctors
         public CellData()
         {
-
+            WeatherHistory = new List<WeatherState>();
+            n = new List<WeatherState>();
         }
         public CellData(Random r)
         {

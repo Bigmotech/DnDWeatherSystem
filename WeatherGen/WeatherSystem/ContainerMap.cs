@@ -11,47 +11,43 @@ namespace WeatherGen.WeatherSystem
         private readonly Random r = new Random(DateTime.Today.GetHashCode());
         private readonly WorldData worldMap;
 
-        public ContainerMap(WorldData world)
+        public ContainerMap(WorldData world, bool isNew)
         { 
             worldMap = world;
-            LoadInMap();
+            if (isNew)
+                LoadInNewMap();
+            else
+                LoadInMap();
         }
+
+        private void LoadInNewMap()
+        {
+            for (int i = 0; i < worldMap.col; i++)
+            {
+                for (int j = 0; j < worldMap.col; j++)
+                {
+                    worldMap.weatherMap[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
+                    worldMap.weatherMap[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
+                }
+            }
+            for (int i = 0; i < worldMap.col; i++)
+            {
+                for (int j = 0; j < worldMap.col; j++)
+                {
+                    WeatherSim.RunDay(worldMap.weatherMap[i][j].Cell);
+                    TempetureGeneration.GenerateTempeture(worldMap.weatherMap[i][j].Cell, worldMap.currentDay);
+                }
+            }
+        }
+
         private void LoadInMap()
         {
             for (int i = 0; i < worldMap.col; i++)
             {
                 for (int j = 0; j < worldMap.col; j++)
                 {
-                    worldMap.weatherMap[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
+                    worldMap.weatherMap[i][j] = new WeatherCelliconDisplay(worldMap.weatherMap[i][j].Cell);
                     worldMap.weatherMap[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
-                }
-            }
-            for (int i = 0; i < worldMap.col; i++)
-            {
-                for (int j = 0; j < worldMap.col; j++)
-                {
-                    WeatherSim.RunDay(worldMap.weatherMap[i][j].Cell);
-                    TempetureGeneration.GenerateTempeture(worldMap.weatherMap[i][j].Cell);
-                }
-            }
-        }
-
-        private void LoadSavedMap()
-        {
-            for (int i = 0; i < worldMap.col; i++)
-            {
-                for (int j = 0; j < worldMap.col; j++)
-                {
-                    worldMap.weatherMap[i][j] = new WeatherCelliconDisplay(new CellData(r, i, j));
-                    worldMap.weatherMap[i][j].OutgoingRainEvent += ContainerMap_OutgoingRainEvent1;
-                }
-            }
-            for (int i = 0; i < worldMap.row; i++)
-            {
-                for (int j = 0; j < worldMap.col; j++)
-                {
-                    WeatherSim.RunDay(worldMap.weatherMap[i][j].Cell);
-                    TempetureGeneration.GenerateTempeture(worldMap.weatherMap[i][j].Cell);
                 }
             }
         }
@@ -110,18 +106,29 @@ namespace WeatherGen.WeatherSystem
         public WeatherCelliconDisplay[][] RunFormDay(out WeatherCelliconDisplay[][] IncomingGrid)
         {
 
-            Parallel.ForEach(worldMap.weatherMap, (cell) =>
+            //Parallel.ForEach(worldMap.weatherMap, (cell) =>
+            //{
+            //    Parallel.ForEach(cell, (cellbody) =>
+            //    {
+            //        WeatherSim.RunDay(cellbody.Cell);
+            //        cellbody.Cell.CurrentTemp = TempetureGeneration.GenerateTempeture(cellbody.Cell, worldMap.currentDay);
+
+            //    });
+            //});
+            for(int x = 0; x < worldMap.col; x++)
             {
-                Parallel.ForEach(cell, (cellbody) =>
+                for(int y = 0; y < worldMap.row; y++)
                 {
-                    WeatherSim.RunDay(cellbody.Cell);
-                });
-            });
+                    WeatherSim.RunDay(worldMap.weatherMap[x][y].Cell);
+                    worldMap.weatherMap[x][y].Cell.CurrentTemp = TempetureGeneration.GenerateTempeture(worldMap.weatherMap[x][y].Cell, worldMap.currentDay);
+                }
+            }
             worldMap.currentDay++;
             IncomingGrid = worldMap.weatherMap;
             CheckNeighborsRain();
             CheckNeighborsLoopForm();
             CheckNeighborsToRain();
+            
             return worldMap.weatherMap;
         }
 
