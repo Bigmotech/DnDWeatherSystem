@@ -18,33 +18,27 @@ namespace WeatherGen.WeatherSystem
             Cell = cell;
             TerrainButton.Text = cell.currentTerrian.ToString();
             this.StartPosition = FormStartPosition.CenterParent;
-            Cell.PropertyChanged += Cell_PropertyChanged;
             Start();
         }
 
         private void Start()
         {
+
             RainCombo.SelectedItem = Cell.Statechange.ToString();
             LocalRainText.Text = Cell.LocalRain.ToString();
             OutgoingText.Text = Cell.OutgoingRain.ToString();
             IncomingText.Text = Cell.IncomingRain.ToString();
             TotalText.Text = Cell.TotalRain.ToString();
             RainLL.Text = ConditionsSystem.RainCondition(Cell.LocalRain);
-        }
-
-        private void WeatherControl_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-
-            switch (e.PropertyName)
+            //CloudDirectionLL.Text = ConditionsSystem.CloudDirection(Cell.Direction);
+            TempLL.Text = Cell.CurrentTemp.ToString();
+            //WindSpeedLL.Text = ConditionsSystem.WindCondition(Cell.TempRange);
+            if (Cell.Statechange.Equals(WeatherState.Rain))
             {
-                case "CurrentTerrian":
-
-                    break;
-                
-
+                this.BackColor = Color.Navy;
             }
-
         }
+
         private void EditButton_Click(object sender, EventArgs e)
         {
 
@@ -54,34 +48,6 @@ namespace WeatherGen.WeatherSystem
             IncomingText.Enabled = !IncomingText.Enabled;
             RainCombo.Enabled = !RainCombo.Enabled;
 
-        }
-        public void SendOutgoingRain(int row, int col)
-        {
-
-        }
-        public void RunDayForm()
-        {
-            if (Cell.currentTerrian.Equals(Terrian.Mountain) || Cell.currentTerrian.Equals(Terrian.None))
-            {
-                Cell.LocalRain = 0;
-                Cell.OutgoingRain = 0;
-                Cell.IncomingRain = 0;
-                Cell.TotalRain = 0;
-            }
-            else
-            {
-                WeatherSim.RunDay(Cell);
-                RainCombo.SelectedItem = Cell.Statechange.ToString();
-                LocalRainText.Text = Cell.LocalRain.ToString();
-                OutgoingText.Text = Cell.OutgoingRain.ToString();
-                IncomingText.Text = Cell.IncomingRain.ToString();
-                TotalText.Text = Cell.TotalRain.ToString();
-                RainLL.Text = ConditionsSystem.RainCondition(Cell.LocalRain);
-                //CloudDirectionLL.Text = ConditionsSystem.CloudDirection(Cell.Direction);
-                //TempLL.Text = ConditionsSystem.TempCondition(Cell.TempRange);
-                //WindSpeedLL.Text = ConditionsSystem.WindCondition(Cell.TempRange);
-                WeatherSim.ZeroIncoming(Cell);
-            }
         }
 
         private void LocalRainText_KeyDown(object sender, KeyEventArgs e)
@@ -148,77 +114,6 @@ namespace WeatherGen.WeatherSystem
             Cell.Statechange = (WeatherState)RainCombo.SelectedIndex + 1;
         }
 
-        private void Cell_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            switch (e.PropertyName)
-            {
-                case "TempDiscription":
-
-                    break;
-                case "Statechange":
-                    if (Cell.Statechange.Equals(WeatherState.Rain))
-                    {
-                        this.BackColor = Color.Navy;
-                    }
-                    else
-                    {
-                        this.BackColor = Color.Yellow;
-                    }
-
-
-
-                    break;
-                case "IncomingRainCheck":
-                    break;
-                case "LocalRain":
-                    LocalRainText.Text = Cell.LocalRain.ToString();
-                    break;
-                case "IncomingRain":
-                    IncomingText.Text = Cell.IncomingRain.ToString();
-                    break;
-                case "OutgoingRain":
-                    OutgoingText.Text = Cell.OutgoingRain.ToString();
-                    break;
-                case "TotalRain":
-                    TotalText.Text = Cell.TotalRain.ToString();
-                    break;
-                case "TempRange":
-                    break;
-                case "MaxTemp":
-                    break;
-                case "MinTemp":
-                    break;
-                case "Direction":
-                    //CloudDirectionLL.Text = Cell.Direction.ToString();
-                    break;
-                case "SurroundedFlag":
-                    break;
-                case "currentTerrian":
-                    if (Cell.currentTerrian.Equals(Terrian.Mountain))
-                    {
-                        LocalRainText.Hide();
-                        OutgoingText.Hide();
-                        IncomingText.Hide();
-                        TotalText.Hide();
-                        RainCombo.Hide();
-                    }
-                    else
-                    {
-                        LocalRainText.Show();
-                        OutgoingText.Show();
-                        IncomingText.Show();
-                        TotalText.Show();
-                        RainCombo.Show();
-                    }
-
-
-                    break;
-
-            }
-        }
-
-
-
         private void RainLL_MouseHover(object sender, EventArgs e)
         {
             ToolInfo.Show(ConditionsSystem.RainCondition(Cell.LocalRain), RainLL);
@@ -226,7 +121,7 @@ namespace WeatherGen.WeatherSystem
 
         private void TempLL_MouseHover(object sender, EventArgs e)
         {
-            //add temp funcation
+            ToolInfo.Show(ConditionsSystem.TempCondition(Cell.CurrentTemp), TempLL);
         }
 
         private void RainLL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -236,6 +131,11 @@ namespace WeatherGen.WeatherSystem
                 Location = new Point(RainLL.Location.X, RainLL.Location.Y)
             };
             explained.Show();
+
+        }
+
+        private void TempLL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
 
         }
     }

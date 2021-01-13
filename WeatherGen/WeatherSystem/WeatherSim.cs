@@ -85,7 +85,7 @@ namespace WeatherGen.WeatherSystem
             cell.IncomingRainCheck = false;
             GetInverseDryToWet(cell);
             GetInverseWetToWet(cell);
-
+            
             return cell.Statechange;
         }
 
@@ -144,6 +144,7 @@ namespace WeatherGen.WeatherSystem
                 WeatherState.NoRain,
             };
             cell.WeatherHistory = new List<WeatherState>();
+            cell.WeatherHistory.AddRange(cell.n);
 
         }
 
@@ -198,6 +199,7 @@ namespace WeatherGen.WeatherSystem
         static public void Clear_Rain_History(CellData cell)
         {
             cell.WeatherHistory.Clear();
+            cell.WeatherHistory.AddRange(cell.n);
             MakeDefault(cell);
 
         }

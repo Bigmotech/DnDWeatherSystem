@@ -155,14 +155,7 @@ namespace WeatherGen
 
         }
 
-        private void LoadWeather_Click(object sender, EventArgs e)
-        {
 
-            world = new WorldData("TestWorld", Properties.Settings.Default.picturePath, world.col, world.col);
-            map = new ContainerMap(world);
-            LoadCellMap();
-            StartLoad();
-        }
 
         private void RunDayButton_Click(object sender, EventArgs e)
         {
@@ -229,7 +222,7 @@ namespace WeatherGen
             Properties.Settings.Default.Save();
             this.Text = world.worldName;
             LoadCellMap();
-            map = new ContainerMap(world);
+            map = new ContainerMap(world, false);
             StartLoad();
             FitTableToPicture();
         }
@@ -240,10 +233,11 @@ namespace WeatherGen
             Properties.Settings.Default.Save();
             this.Text = world.worldName;
             LoadCellMap();
-            map = new ContainerMap(world);
+            map = new ContainerMap(world, false);
             map.RunFormDay(out world.weatherMap);
             StartLoad();
             FitTableToPicture();
+            mapBox.Refresh();
         }
 
         private void SaveAsMapButton_Click(object sender, EventArgs e)

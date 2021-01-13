@@ -62,8 +62,9 @@
             // 
             this.EditButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.EditButton.Location = new System.Drawing.Point(0, 0);
+            this.EditButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.EditButton.Name = "EditButton";
-            this.EditButton.Size = new System.Drawing.Size(162, 23);
+            this.EditButton.Size = new System.Drawing.Size(297, 42);
             this.EditButton.TabIndex = 0;
             this.EditButton.Text = "Details";
             this.EditButton.UseVisualStyleBackColor = true;
@@ -72,9 +73,10 @@
             // TerrainButton
             // 
             this.TerrainButton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.TerrainButton.Location = new System.Drawing.Point(0, 177);
+            this.TerrainButton.Location = new System.Drawing.Point(0, 327);
+            this.TerrainButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.TerrainButton.Name = "TerrainButton";
-            this.TerrainButton.Size = new System.Drawing.Size(162, 23);
+            this.TerrainButton.Size = new System.Drawing.Size(297, 42);
             this.TerrainButton.TabIndex = 1;
             this.TerrainButton.Text = "None";
             this.TerrainButton.UseVisualStyleBackColor = true;
@@ -85,9 +87,9 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 37F));
             this.tableLayoutPanel1.Controls.Add(this.RainCombo, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.label3, 1, 2);
@@ -98,7 +100,8 @@
             this.tableLayoutPanel1.Controls.Add(this.IncomingText, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.TotalText, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label1, 1, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 29);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 54);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -106,7 +109,7 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(163, 147);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(299, 271);
             this.tableLayoutPanel1.TabIndex = 2;
             // 
             // RainCombo
@@ -116,9 +119,10 @@
             this.RainCombo.Items.AddRange(new object[] {
             "Rain",
             "NoRain"});
-            this.RainCombo.Location = new System.Drawing.Point(3, 3);
+            this.RainCombo.Location = new System.Drawing.Point(6, 6);
+            this.RainCombo.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.RainCombo.Name = "RainCombo";
-            this.RainCombo.Size = new System.Drawing.Size(75, 21);
+            this.RainCombo.Size = new System.Drawing.Size(137, 32);
             this.RainCombo.TabIndex = 0;
             this.RainCombo.SelectedIndexChanged += new System.EventHandler(this.RainCombo_SelectedIndexChanged);
             // 
@@ -126,9 +130,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Location = new System.Drawing.Point(84, 29);
+            this.label2.Location = new System.Drawing.Point(155, 54);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(76, 13);
+            this.label2.Size = new System.Drawing.Size(138, 25);
             this.label2.TabIndex = 2;
             this.label2.Text = "Local Rain";
             // 
@@ -136,9 +141,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label3.Location = new System.Drawing.Point(84, 58);
+            this.label3.Location = new System.Drawing.Point(155, 108);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 13);
+            this.label3.Size = new System.Drawing.Size(138, 25);
             this.label3.TabIndex = 3;
             this.label3.Text = "Outgoing Rain";
             // 
@@ -146,9 +152,10 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label4.Location = new System.Drawing.Point(84, 87);
+            this.label4.Location = new System.Drawing.Point(155, 162);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(76, 13);
+            this.label4.Size = new System.Drawing.Size(138, 25);
             this.label4.TabIndex = 4;
             this.label4.Text = "Incoming Rain";
             // 
@@ -156,36 +163,40 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label5.Location = new System.Drawing.Point(84, 116);
+            this.label5.Location = new System.Drawing.Point(155, 216);
+            this.label5.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(76, 13);
+            this.label5.Size = new System.Drawing.Size(138, 25);
             this.label5.TabIndex = 5;
             this.label5.Text = "Total Rain";
             // 
             // LocalRainText
             // 
             this.LocalRainText.Dock = System.Windows.Forms.DockStyle.Top;
-            this.LocalRainText.Location = new System.Drawing.Point(3, 32);
+            this.LocalRainText.Location = new System.Drawing.Point(6, 60);
+            this.LocalRainText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.LocalRainText.Name = "LocalRainText";
-            this.LocalRainText.Size = new System.Drawing.Size(75, 20);
+            this.LocalRainText.Size = new System.Drawing.Size(137, 29);
             this.LocalRainText.TabIndex = 6;
             this.LocalRainText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.LocalRainText_KeyDown);
             // 
             // OutgoingText
             // 
             this.OutgoingText.Dock = System.Windows.Forms.DockStyle.Top;
-            this.OutgoingText.Location = new System.Drawing.Point(3, 61);
+            this.OutgoingText.Location = new System.Drawing.Point(6, 114);
+            this.OutgoingText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.OutgoingText.Name = "OutgoingText";
-            this.OutgoingText.Size = new System.Drawing.Size(75, 20);
+            this.OutgoingText.Size = new System.Drawing.Size(137, 29);
             this.OutgoingText.TabIndex = 7;
             this.OutgoingText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OutgoingText_KeyDown);
             // 
             // IncomingText
             // 
             this.IncomingText.Dock = System.Windows.Forms.DockStyle.Top;
-            this.IncomingText.Location = new System.Drawing.Point(3, 90);
+            this.IncomingText.Location = new System.Drawing.Point(6, 168);
+            this.IncomingText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.IncomingText.Name = "IncomingText";
-            this.IncomingText.Size = new System.Drawing.Size(75, 20);
+            this.IncomingText.Size = new System.Drawing.Size(137, 29);
             this.IncomingText.TabIndex = 8;
             this.IncomingText.KeyDown += new System.Windows.Forms.KeyEventHandler(this.IncomingText_KeyDown_1);
             // 
@@ -193,18 +204,20 @@
             // 
             this.TotalText.Dock = System.Windows.Forms.DockStyle.Top;
             this.TotalText.Enabled = false;
-            this.TotalText.Location = new System.Drawing.Point(3, 119);
+            this.TotalText.Location = new System.Drawing.Point(6, 222);
+            this.TotalText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.TotalText.Name = "TotalText";
-            this.TotalText.Size = new System.Drawing.Size(75, 20);
+            this.TotalText.Size = new System.Drawing.Size(137, 29);
             this.TotalText.TabIndex = 9;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(84, 0);
+            this.label1.Location = new System.Drawing.Point(155, 0);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 13);
+            this.label1.Size = new System.Drawing.Size(138, 25);
             this.label1.TabIndex = 1;
             this.label1.Text = "Rain/NoRain";
             // 
@@ -215,17 +228,19 @@
             this.Basic.Controls.Add(this.TerrainButton);
             this.Basic.Dock = System.Windows.Forms.DockStyle.Left;
             this.Basic.Location = new System.Drawing.Point(0, 0);
+            this.Basic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Basic.Name = "Basic";
-            this.Basic.Size = new System.Drawing.Size(162, 200);
+            this.Basic.Size = new System.Drawing.Size(297, 369);
             this.Basic.TabIndex = 3;
             // 
             // Advance
             // 
             this.Advance.Controls.Add(this.AdvanceTable);
             this.Advance.Dock = System.Windows.Forms.DockStyle.Right;
-            this.Advance.Location = new System.Drawing.Point(158, 0);
+            this.Advance.Location = new System.Drawing.Point(290, 0);
+            this.Advance.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.Advance.Name = "Advance";
-            this.Advance.Size = new System.Drawing.Size(83, 200);
+            this.Advance.Size = new System.Drawing.Size(152, 369);
             this.Advance.TabIndex = 4;
             // 
             // AdvanceTable
@@ -241,40 +256,43 @@
             this.AdvanceTable.Controls.Add(this.WindSpeedLL, 1, 2);
             this.AdvanceTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AdvanceTable.Location = new System.Drawing.Point(0, 0);
-            this.AdvanceTable.Margin = new System.Windows.Forms.Padding(3, 5, 3, 3);
+            this.AdvanceTable.Margin = new System.Windows.Forms.Padding(6, 9, 6, 6);
             this.AdvanceTable.Name = "AdvanceTable";
-            this.AdvanceTable.Padding = new System.Windows.Forms.Padding(0, 5, 0, 0);
+            this.AdvanceTable.Padding = new System.Windows.Forms.Padding(0, 9, 0, 0);
             this.AdvanceTable.RowCount = 3;
             this.AdvanceTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.AdvanceTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.AdvanceTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.AdvanceTable.Size = new System.Drawing.Size(83, 200);
+            this.AdvanceTable.Size = new System.Drawing.Size(152, 369);
             this.AdvanceTable.TabIndex = 0;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 5);
+            this.label6.Location = new System.Drawing.Point(6, 9);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(32, 26);
+            this.label6.Size = new System.Drawing.Size(56, 50);
             this.label6.TabIndex = 0;
             this.label6.Text = "Rain Fall";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(3, 70);
+            this.label8.Location = new System.Drawing.Point(6, 129);
+            this.label8.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.Size = new System.Drawing.Size(63, 25);
             this.label8.TabIndex = 2;
             this.label8.Text = "Temp";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 135);
+            this.label9.Location = new System.Drawing.Point(6, 249);
+            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(35, 39);
+            this.label9.Size = new System.Drawing.Size(63, 75);
             this.label9.TabIndex = 3;
             this.label9.Text = "Wind Speed";
             // 
@@ -282,9 +300,10 @@
             // 
             this.RainLL.AutoEllipsis = true;
             this.RainLL.AutoSize = true;
-            this.RainLL.Location = new System.Drawing.Point(44, 5);
+            this.RainLL.Location = new System.Drawing.Point(82, 9);
+            this.RainLL.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.RainLL.Name = "RainLL";
-            this.RainLL.Size = new System.Drawing.Size(13, 13);
+            this.RainLL.Size = new System.Drawing.Size(23, 25);
             this.RainLL.TabIndex = 7;
             this.RainLL.TabStop = true;
             this.RainLL.Text = "0";
@@ -294,37 +313,41 @@
             // TempLL
             // 
             this.TempLL.AutoSize = true;
-            this.TempLL.Location = new System.Drawing.Point(44, 70);
+            this.TempLL.Location = new System.Drawing.Point(82, 129);
+            this.TempLL.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.TempLL.Name = "TempLL";
-            this.TempLL.Size = new System.Drawing.Size(28, 13);
+            this.TempLL.Size = new System.Drawing.Size(53, 25);
             this.TempLL.TabIndex = 9;
             this.TempLL.TabStop = true;
             this.TempLL.Text = "Cool";
+            this.TempLL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TempLL_LinkClicked);
             this.TempLL.MouseHover += new System.EventHandler(this.TempLL_MouseHover);
             // 
             // WindSpeedLL
             // 
             this.WindSpeedLL.AutoSize = true;
-            this.WindSpeedLL.Location = new System.Drawing.Point(44, 135);
+            this.WindSpeedLL.Location = new System.Drawing.Point(82, 249);
+            this.WindSpeedLL.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.WindSpeedLL.Name = "WindSpeedLL";
-            this.WindSpeedLL.Size = new System.Drawing.Size(33, 13);
+            this.WindSpeedLL.Size = new System.Drawing.Size(61, 25);
             this.WindSpeedLL.TabIndex = 10;
             this.WindSpeedLL.TabStop = true;
             this.WindSpeedLL.Text = "0mph";
             // 
-            // WeatherControlForm
+            // WeatherFormData
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Yellow;
-            this.ClientSize = new System.Drawing.Size(241, 200);
+            this.ClientSize = new System.Drawing.Size(442, 369);
             this.Controls.Add(this.Advance);
             this.Controls.Add(this.Basic);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.HelpButton = true;
+            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "WeatherControlForm";
+            this.Name = "WeatherFormData";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

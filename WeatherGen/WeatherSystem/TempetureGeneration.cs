@@ -12,9 +12,9 @@ namespace WeatherGen.WeatherSystem
         private const int MIN = -20;
 
         static private Random random = new Random(DateTime.Now.Second.GetHashCode());
-        static public int GenerateTempeture(CellData cell)
+        static public int GenerateTempeture(CellData cell, int Day)
         {
-                double temp = (Math.Sin((cell.Day / 58.1) - 8) / 2) + .5;
+                double temp = (Math.Sin((Day / 58.1) - 8) / 2) + .5;
                 temp = DenormilazedData(temp);
                 double adjust = random.NextDouble();
                 adjust = DenormilazedDataAdjust(adjust);

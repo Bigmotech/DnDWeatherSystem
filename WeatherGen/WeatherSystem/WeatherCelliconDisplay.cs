@@ -17,6 +17,7 @@ namespace WeatherGen.WeatherSystem
         [JsonProperty]
         public CellData Cell;
         public delegate void OutgoingRainEventHandler(object sender, OutgoingRainEventArgs e);
+
         public event OutgoingRainEventHandler OutgoingRainEvent;
         [JsonProperty]
         public Color cloudCover { get; set; }
@@ -37,6 +38,20 @@ namespace WeatherGen.WeatherSystem
             linkLabel1.FlatAppearance.MouseOverBackColor = Color.FromArgb(80, 255, 255, 255);
             Cell = cell;
             Cell.PropertyChanged += ControlForm_PropertyChanged;
+            switch (Cell.Statechange)
+            {
+                case WeatherState.NoRain:
+
+                    cloudCover = Color.Transparent;
+
+                    break;
+                case WeatherState.Rain:
+
+                    cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
+                    break;
+
+            }
+            this.Dock = DockStyle.Fill;
         }
 
 
@@ -48,12 +63,12 @@ namespace WeatherGen.WeatherSystem
                     switch (Cell.Statechange)
                     {
                         case WeatherState.NoRain:
-                            //linkLabel1.Image = new Bitmap(Properties.Resources.sunny, linkLabel1.Size);
+                            
                             cloudCover = Color.Transparent;
 
                             break;
                         case WeatherState.Rain:
-                            //linkLabel1.Image = new Bitmap(WeatherGen.Properties.Resources.rainnyday, linkLabel1.Size);
+                            
                             cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
                             break;
 
@@ -65,18 +80,17 @@ namespace WeatherGen.WeatherSystem
                 case "IsCloudy":
                     this.BackColor = Color.FromArgb(50, Color.LightGray);
                     break;
-                case "TempDiscription":
+                case "OutgoingRain":
+                    OnOutgoingRainChange();
                     break;
-                case "PrevState":
+                case "CurrentTemp":
                     break;
+
                 case "IncomingRainCheck":
                     break;
                 case "LocalRain":
                     break;
                 case "IncomingRain":
-                    break;
-                case "OutgoingRain":
-                    OnOutgoingRainChange();
                     break;
                 case "TotalRain":
                     break;
@@ -87,10 +101,13 @@ namespace WeatherGen.WeatherSystem
                 case "MinTemp":
                     break;
                 case "Direction":
+                    //CloudDirectionLL.Text = Cell.Direction.ToString();
                     break;
                 case "SurroundedFlag":
                     break;
-               
+                case "currentTerrian":
+                    break;
+
             }
         }
 
