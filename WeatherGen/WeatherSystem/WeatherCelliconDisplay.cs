@@ -28,7 +28,6 @@ namespace WeatherGen.WeatherSystem
             Cell = new CellData();
             this.Visible = false;
             
-            this.Dock = DockStyle.Fill;
         }
         public WeatherCelliconDisplay(CellData cell)
         {
@@ -48,10 +47,11 @@ namespace WeatherGen.WeatherSystem
                 case WeatherState.Rain:
 
                     cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
+                    this.BackColor = Color.FromArgb(50, Color.DeepSkyBlue);
                     break;
 
             }
-            this.Dock = DockStyle.Fill;
+
         }
 
 
@@ -63,16 +63,17 @@ namespace WeatherGen.WeatherSystem
                     switch (Cell.Statechange)
                     {
                         case WeatherState.NoRain:
-                            
-                            cloudCover = Color.Transparent;
 
+                            cloudCover = Color.Transparent;
+                            this.BackColor = Color.Transparent;
                             break;
                         case WeatherState.Rain:
-                            
                             cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
+                            this.BackColor = Color.FromArgb(50, Color.DeepSkyBlue);
                             break;
 
                     }
+                    
                     break;
 
                 case "FirstDay":

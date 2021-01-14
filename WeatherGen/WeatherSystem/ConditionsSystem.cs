@@ -36,12 +36,12 @@ namespace WeatherGen.WeatherSystem
             else if(data[0] >= .3)
             {
 
-                condition = "The area is lightly obscured and creatures have disadvantage on Wisdom (Perception) checks that rely hearing and sight. Open flames such as tourches and campfires are extinguished";
+                condition = "A heavy rain, The area is lightly obscured and creatures have disadvantage on Wisdom (Perception) checks that rely hearing and sight. Open flames such as tourches and campfires are extinguished";
                 
             }
             else
             {
-                condition = "No rain";
+                
             }
 
             return condition;
@@ -52,7 +52,7 @@ namespace WeatherGen.WeatherSystem
             double RainRate;
             double Hours;
             double[] data = new double[2];
-            if (localRain > 12)
+            if (localRain > 2.3)
             {
                 data[0] = 12;
                 data[1] = 24;
@@ -103,9 +103,31 @@ namespace WeatherGen.WeatherSystem
             
         }
 
-        internal static string CloudDirection(object direction)
+        internal static string CloudDirection(CellData cell )
         {
-            throw new NotImplementedException();
+            if (cell.LocalRain > 0)
+            {
+                return "Rain Clouds";
+            }
+            if(cell.IncomingRain != 0)
+            {
+                return "Signs of approching rain";
+            }
+            else
+            {
+                switch (r.Next(1, 5))
+                {
+                    case 1:
+                        return "Clear Sunny Day";
+                    case 2:
+                        return "Scattered clouds";
+                    case 3:
+                        return "Broken clouds";
+                    case 4:
+                        return "Overcast";
+                }
+            }
+            return "Clear Sunny Day";
         }
 
         internal static string TempCondition(int temp)

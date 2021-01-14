@@ -65,23 +65,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="WorldMap.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="GridTestForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="GridTestForm.Designer.cs">
-      <DependentUpon>GridTestForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="MainPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MainPage.Designer.cs">
-      <DependentUpon>MainPage.cs</DependentUpon>
+    <Compile Include="WorldMap.Designer.cs">
+      <DependentUpon>WorldMap.cs</DependentUpon>
     </Compile>
     <Compile Include="MarkovChain\MarkovChain.cs" />
     <Compile Include="MarkovChain\MarkovInnerChain.cs" />
@@ -103,12 +91,6 @@
     <Compile Include="WeatherSystem\CellData.cs" />
     <Compile Include="WeatherSystem\ConditionsSystem.cs" />
     <Compile Include="WeatherSystem\Direction.cs" />
-    <Compile Include="WeatherSystem\Explained.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WeatherSystem\Explained.Designer.cs">
-      <DependentUpon>Explained.cs</DependentUpon>
-    </Compile>
     <Compile Include="WeatherSystem\TempetureGeneration.cs" />
     <Compile Include="WeatherSystem\WeatherCellDisplayInfo.cs" />
     <Compile Include="WeatherSystem\WeatherCelliconDisplay.cs">
@@ -126,11 +108,8 @@
     <Compile Include="WeatherSystem\ContainerMap.cs" />
     <Compile Include="WeatherSystem\WeatherSim.cs" />
     <Compile Include="WeatherSystem\WorldData.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MainPage.resx">
-      <DependentUpon>MainPage.cs</DependentUpon>
+    <EmbeddedResource Include="WorldMap.resx">
+      <DependentUpon>WorldMap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="NewWorld.resx">
       <DependentUpon>NewWorld.cs</DependentUpon>
@@ -139,9 +118,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="WeatherSystem\Explained.resx">
-      <DependentUpon>Explained.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WeatherSystem\WeatherCelliconDisplay.resx">
       <DependentUpon>WeatherCelliconDisplay.cs</DependentUpon>
