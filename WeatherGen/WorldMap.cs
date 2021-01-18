@@ -230,6 +230,13 @@ namespace WeatherGen
             {
                 case DialogResult.Yes:
                     world = newWorld.Tag as WorldData;
+                    foreach (WeatherCelliconDisplay[] v in world.weatherMap)
+                    {
+                        foreach (WeatherCelliconDisplay w in v)
+                        {
+                            w.Cell.LoadHistoryToChain();
+                        }
+                    }
                     LoadWorldIntoApplicaiton(world.mapPath);
                     SizeCellsToPicture();
                     break;
