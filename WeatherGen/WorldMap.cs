@@ -17,7 +17,8 @@ namespace WeatherGen
         private Bitmap mapPic;
         private OpenFileDialog dialog;
         private CancellationTokenSource tokenSource;
-        private CancellationToken token;
+        public event EventHandler<ResizedEventArgs> ResizeStart;
+        public event EventHandler ResizeEnded;
 
         public WorldMap()
         {
@@ -25,28 +26,30 @@ namespace WeatherGen
             this.ResizeBegin += WorldMap_ResizeBegin;
             this.ResizeEnd += WorldMap_ResizeEnd;
             tokenSource = new CancellationTokenSource();
-            token = tokenSource.Token;
         }
 
-        private async void WorldMap_ResizeEnd(object sender, EventArgs e)
+        private void WorldMap_ResizeEnd(object sender, EventArgs e)
         {
-            tokenSource.Cancel(false);
-            try
+
+            if (this.ResizeEnded != null)
             {
-                await Task.Run(() => { SizeCellsToPicture(token); }, token);
-            }catch(TaskCanceledException tce)
-            {
-                
+                this.ResizeEnded(null, null);
             }
+            SizeCellsToPicture();
+
+
         }
 
-        private async void WorldMap_ResizeBegin(object sender, EventArgs e)
+        private void WorldMap_ResizeBegin(object sender, EventArgs e)
         {
-
-            await Task.Run(() => {
-            Invoke(new Action(() => { mapBox.Controls.Clear(); }));
-                
-            });
+            if (this.ResizeStart != null)
+            {
+                ResizedEventArgs rea = new ResizedEventArgs();
+                rea.Height = mapBox.Height;
+                rea.Width = mapBox.Width;
+                rea.Rows = world.col;
+                this.ResizeStart(null , rea);
+            }
         }
 
         // test commit
@@ -54,20 +57,20 @@ namespace WeatherGen
         private void Form1_Load(object sender, EventArgs e)
         {
 
-            
+
             mapBox.SizeMode = PictureBoxSizeMode.StretchImage;
             dialog = new OpenFileDialog();
             if (File.Exists(Properties.Settings.Default.picturePath))
             {
                 FitTableToPicture();
-                
-                
+
+
             }
             else
             {
                 //LoadMap();
                 //FitTableToPicture();
-                
+
 
             }
 
@@ -76,7 +79,7 @@ namespace WeatherGen
 
         private void FitTableToPicture()
         {
-            
+
             mapPic = new Bitmap(Properties.Settings.Default.picturePath);
             mapBox.Image = mapPic;
 
@@ -87,12 +90,13 @@ namespace WeatherGen
         {
             mapBox.Controls.Clear();
             flag = true;
+            SizeCellsToPicture();
         }
 
 
         private void LoadMap()
         {
-            
+
             dialog.Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
             dialog.Title = "Please select an image file.";
 
@@ -163,11 +167,11 @@ namespace WeatherGen
                     case DialogResult.Yes:
                         world = JsonConvert.DeserializeObject<WorldData>(File.ReadAllText(dialog.FileName));
                         LoadWorldIntoApplicaiton(dialog.FileName, world.mapPath);
-                        SizeCellsToPicture(token);
+                        SizeCellsToPicture();
 
                         break;
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -184,6 +188,8 @@ namespace WeatherGen
             Properties.Settings.Default.Save();
             this.Text = world.worldName;
             map = new ContainerMap(world, false);
+            Datelabel.Text = world.GetCurrentDayYear();
+            AddEventsToCells();
             StartLoad();
             FitTableToPicture();
         }
@@ -194,10 +200,22 @@ namespace WeatherGen
             Properties.Settings.Default.Save();
             this.Text = world.worldName;
             map = new ContainerMap(world, false);
-            map.RunFormDay(out world.weatherMap);
+            Datelabel.Text = world.GetCurrentDayYear();
+            AddEventsToCells();
             StartLoad();
             FitTableToPicture();
             mapBox.Refresh();
+        }
+
+        private void AddEventsToCells()
+        {
+            foreach(WeatherCelliconDisplay[] wArray in world.weatherMap)
+            {
+                foreach(WeatherCelliconDisplay w in wArray)
+                {
+                    w.AddEventsThroughForm(this);
+                }
+            }
         }
 
         private void SaveAsMapButton_Click(object sender, EventArgs e)
@@ -213,35 +231,42 @@ namespace WeatherGen
                 case DialogResult.Yes:
                     world = newWorld.Tag as WorldData;
                     LoadWorldIntoApplicaiton(world.mapPath);
-                    SizeCellsToPicture(token);
+                    SizeCellsToPicture();
                     break;
             }
         }
 
-        private void SizeCellsToPicture(CancellationToken token)
+        private void SizeCellsToPicture()
         {
-            if (token.IsCancellationRequested)
+
+            if (world != null)
             {
-                if (world != null)
+                mapBox.Controls.Clear();
+                float cellHeight = (float)mapBox.Height / (float)world.col;
+                float cellWidth = (float)mapBox.Width / (float)world.col;
+                Size cellSize = new Size((int)cellWidth, (int)cellHeight);
+
+                for (int x = 0; x < world.col; x++)
                 {
-                    mapBox.Controls.Clear();
-                    float cellHeight = (float)mapBox.Height / (float)world.col;
-                    float cellWidth = (float)mapBox.Width / (float)world.col;
-                    Size cellSize = new Size((int)cellWidth, (int)cellHeight);
-
-                    for (int x = 0; x < world.col; x++)
+                    for (int y = 0; y < world.col; y++)
                     {
-                        for (int y = 0; y < world.col; y++)
-                        {
-                            world.weatherMap[x][y].Size = cellSize;
-                            world.weatherMap[x][y].Location = new Point((int)(x * cellWidth), (int)(y * cellHeight));
-                            mapBox.Controls.Add(world.weatherMap[x][y]);
+                        world.weatherMap[x][y].Size = cellSize;
+                        world.weatherMap[x][y].Location = new Point((int)(x * cellWidth), (int)(y * cellHeight));
+                        mapBox.Controls.Add(world.weatherMap[x][y]);
 
-                        }
                     }
                 }
             }
+
         }
+
+    }
+
+    public class ResizedEventArgs : EventArgs
+    {
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public int Rows { get; set; }
     }
 }
 

@@ -103,7 +103,7 @@ namespace WeatherGen.WeatherSystem
             }
         }
 
-        public WeatherCelliconDisplay[][] RunFormDay(out WeatherCelliconDisplay[][] IncomingGrid)
+        public void RunFormDay(out WeatherCelliconDisplay[][] IncomingGrid)
         {
 
             //Parallel.ForEach(worldMap.weatherMap, (cell) =>
@@ -129,7 +129,6 @@ namespace WeatherGen.WeatherSystem
             CheckNeighborsLoopForm();
             CheckNeighborsToRain();
             
-            return worldMap.weatherMap;
         }
 
         private void CheckNeighborsRain()

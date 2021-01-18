@@ -22,6 +22,10 @@ namespace WeatherGen.WeatherSystem
         [JsonProperty]
         public Color cloudCover { get; set; }
 
+
+
+
+
         public WeatherCelliconDisplay()
         {
             InitializeComponent();
@@ -53,7 +57,27 @@ namespace WeatherGen.WeatherSystem
             }
 
         }
+        public void AddEventsThroughForm(WorldMap worldMap)
+        {
+            worldMap.ResizeStart += WorldMap_ResizeStart;
+            worldMap.ResizeEnded += WorldMap_ResizeEnded; 
+        }
 
+        private void WorldMap_ResizeEnded(object sender, EventArgs e)
+        {
+            this.Visible = true;
+        }
+
+        private void WorldMap_ResizeStart(object sender, ResizedEventArgs e)
+        {
+            
+            float newCellHeight = (float)(e.Height / e.Rows);
+            float newCellWidth = (float)(e.Width / e.Rows);
+            this.Visible = false;
+            this.Size = new Size((int)newCellWidth, (int)newCellHeight);
+            this.Location = new Point((int)(newCellWidth * Cell.Coordinates[0]), (int)(newCellHeight * Cell.Coordinates[1]));
+
+        }
 
         private void ControlForm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {

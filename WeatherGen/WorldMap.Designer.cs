@@ -56,7 +56,6 @@
             this.runDayButton = new System.Windows.Forms.Button();
             this.Datelabel = new System.Windows.Forms.Label();
             this.mapBox = new System.Windows.Forms.PictureBox();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.menuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -246,7 +245,6 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.progressBar1);
             this.splitContainer1.Panel2.Controls.Add(this.mapBox);
             this.splitContainer1.Size = new System.Drawing.Size(1398, 865);
             this.splitContainer1.SplitterDistance = 31;
@@ -282,14 +280,6 @@
             this.mapBox.Size = new System.Drawing.Size(1398, 830);
             this.mapBox.TabIndex = 14;
             this.mapBox.TabStop = false;
-            // 
-            // progressBar1
-            // 
-            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.progressBar1.Location = new System.Drawing.Point(15, 384);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(1371, 23);
-            this.progressBar1.TabIndex = 15;
             // 
             // WorldMap
             // 
@@ -345,7 +335,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.Label Datelabel;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 
