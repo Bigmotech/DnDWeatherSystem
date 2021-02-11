@@ -66,13 +66,6 @@ namespace WeatherGen
 
 
             }
-            else
-            {
-                //LoadMap();
-                //FitTableToPicture();
-
-
-            }
 
         }
 
@@ -220,7 +213,7 @@ namespace WeatherGen
 
         private void SaveAsMapButton_Click(object sender, EventArgs e)
         {
-
+            //TO-DO ability to save as a different world
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)

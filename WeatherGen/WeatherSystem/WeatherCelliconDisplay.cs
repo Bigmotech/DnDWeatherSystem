@@ -145,6 +145,7 @@ namespace WeatherGen.WeatherSystem
         {
             OutgoingRainEvent?.Invoke(this, new OutgoingRainEventArgs(Cell));
         }
+       
     }
 
     public class OutgoingRainEventArgs : EventArgs
@@ -154,4 +155,6 @@ namespace WeatherGen.WeatherSystem
         public int Column { get; set; }
         public OutgoingRainEventArgs(CellData e) { cell = e; Row = e.Coordinates[0]; Column = e.Coordinates[1]; }
     }
+
+    
 }

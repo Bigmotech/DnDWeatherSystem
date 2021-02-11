@@ -65,6 +65,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestingControlLessCells.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TestingControlLessCells.Designer.cs">
+      <DependentUpon>TestingControlLessCells.cs</DependentUpon>
+    </Compile>
     <Compile Include="WorldMap.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,9 @@
     <Compile Include="WeatherSystem\ContainerMap.cs" />
     <Compile Include="WeatherSystem\WeatherSim.cs" />
     <Compile Include="WeatherSystem\WorldData.cs" />
+    <EmbeddedResource Include="TestingControlLessCells.resx">
+      <DependentUpon>TestingControlLessCells.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WorldMap.resx">
       <DependentUpon>WorldMap.cs</DependentUpon>
     </EmbeddedResource>
