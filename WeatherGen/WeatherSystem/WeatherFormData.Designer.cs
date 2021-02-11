@@ -47,10 +47,10 @@
             this.AdvanceTable = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.Cloudcov = new System.Windows.Forms.Label();
             this.RainLL = new System.Windows.Forms.LinkLabel();
             this.TempLL = new System.Windows.Forms.LinkLabel();
-            this.WindSpeedLL = new System.Windows.Forms.LinkLabel();
+            this.CloudcoverLL = new System.Windows.Forms.LinkLabel();
             this.ToolInfo = new System.Windows.Forms.ToolTip(this.components);
             this.tableLayoutPanel1.SuspendLayout();
             this.Basic.SuspendLayout();
@@ -62,7 +62,7 @@
             // 
             this.EditButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.EditButton.Location = new System.Drawing.Point(0, 0);
-            this.EditButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.EditButton.Margin = new System.Windows.Forms.Padding(6);
             this.EditButton.Name = "EditButton";
             this.EditButton.Size = new System.Drawing.Size(297, 42);
             this.EditButton.TabIndex = 0;
@@ -74,7 +74,7 @@
             // 
             this.TerrainButton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.TerrainButton.Location = new System.Drawing.Point(0, 327);
-            this.TerrainButton.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.TerrainButton.Margin = new System.Windows.Forms.Padding(6);
             this.TerrainButton.Name = "TerrainButton";
             this.TerrainButton.Size = new System.Drawing.Size(297, 42);
             this.TerrainButton.TabIndex = 1;
@@ -101,7 +101,7 @@
             this.tableLayoutPanel1.Controls.Add(this.TotalText, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.label1, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 54);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(6);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 5;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -120,7 +120,7 @@
             "Rain",
             "NoRain"});
             this.RainCombo.Location = new System.Drawing.Point(6, 6);
-            this.RainCombo.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.RainCombo.Margin = new System.Windows.Forms.Padding(6);
             this.RainCombo.Name = "RainCombo";
             this.RainCombo.Size = new System.Drawing.Size(137, 32);
             this.RainCombo.TabIndex = 0;
@@ -174,7 +174,7 @@
             // 
             this.LocalRainText.Dock = System.Windows.Forms.DockStyle.Top;
             this.LocalRainText.Location = new System.Drawing.Point(6, 60);
-            this.LocalRainText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.LocalRainText.Margin = new System.Windows.Forms.Padding(6);
             this.LocalRainText.Name = "LocalRainText";
             this.LocalRainText.Size = new System.Drawing.Size(137, 29);
             this.LocalRainText.TabIndex = 6;
@@ -184,7 +184,7 @@
             // 
             this.OutgoingText.Dock = System.Windows.Forms.DockStyle.Top;
             this.OutgoingText.Location = new System.Drawing.Point(6, 114);
-            this.OutgoingText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.OutgoingText.Margin = new System.Windows.Forms.Padding(6);
             this.OutgoingText.Name = "OutgoingText";
             this.OutgoingText.Size = new System.Drawing.Size(137, 29);
             this.OutgoingText.TabIndex = 7;
@@ -194,7 +194,7 @@
             // 
             this.IncomingText.Dock = System.Windows.Forms.DockStyle.Top;
             this.IncomingText.Location = new System.Drawing.Point(6, 168);
-            this.IncomingText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.IncomingText.Margin = new System.Windows.Forms.Padding(6);
             this.IncomingText.Name = "IncomingText";
             this.IncomingText.Size = new System.Drawing.Size(137, 29);
             this.IncomingText.TabIndex = 8;
@@ -205,7 +205,7 @@
             this.TotalText.Dock = System.Windows.Forms.DockStyle.Top;
             this.TotalText.Enabled = false;
             this.TotalText.Location = new System.Drawing.Point(6, 222);
-            this.TotalText.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.TotalText.Margin = new System.Windows.Forms.Padding(6);
             this.TotalText.Name = "TotalText";
             this.TotalText.Size = new System.Drawing.Size(137, 29);
             this.TotalText.TabIndex = 9;
@@ -228,7 +228,7 @@
             this.Basic.Controls.Add(this.TerrainButton);
             this.Basic.Dock = System.Windows.Forms.DockStyle.Left;
             this.Basic.Location = new System.Drawing.Point(0, 0);
-            this.Basic.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Basic.Margin = new System.Windows.Forms.Padding(6);
             this.Basic.Name = "Basic";
             this.Basic.Size = new System.Drawing.Size(297, 369);
             this.Basic.TabIndex = 3;
@@ -238,7 +238,7 @@
             this.Advance.Controls.Add(this.AdvanceTable);
             this.Advance.Dock = System.Windows.Forms.DockStyle.Right;
             this.Advance.Location = new System.Drawing.Point(290, 0);
-            this.Advance.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Advance.Margin = new System.Windows.Forms.Padding(6);
             this.Advance.Name = "Advance";
             this.Advance.Size = new System.Drawing.Size(152, 369);
             this.Advance.TabIndex = 4;
@@ -250,10 +250,10 @@
             this.AdvanceTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.AdvanceTable.Controls.Add(this.label6, 0, 0);
             this.AdvanceTable.Controls.Add(this.label8, 0, 1);
-            this.AdvanceTable.Controls.Add(this.label9, 0, 2);
+            this.AdvanceTable.Controls.Add(this.Cloudcov, 0, 2);
             this.AdvanceTable.Controls.Add(this.RainLL, 1, 0);
             this.AdvanceTable.Controls.Add(this.TempLL, 1, 1);
-            this.AdvanceTable.Controls.Add(this.WindSpeedLL, 1, 2);
+            this.AdvanceTable.Controls.Add(this.CloudcoverLL, 1, 2);
             this.AdvanceTable.Dock = System.Windows.Forms.DockStyle.Fill;
             this.AdvanceTable.Location = new System.Drawing.Point(0, 0);
             this.AdvanceTable.Margin = new System.Windows.Forms.Padding(6, 9, 6, 6);
@@ -286,15 +286,15 @@
             this.label8.TabIndex = 2;
             this.label8.Text = "Temp";
             // 
-            // label9
+            // Cloudcov
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(6, 249);
-            this.label9.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(63, 75);
-            this.label9.TabIndex = 3;
-            this.label9.Text = "Wind Speed";
+            this.Cloudcov.AutoSize = true;
+            this.Cloudcov.Location = new System.Drawing.Point(6, 249);
+            this.Cloudcov.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.Cloudcov.Name = "Cloudcov";
+            this.Cloudcov.Size = new System.Drawing.Size(64, 50);
+            this.Cloudcov.TabIndex = 3;
+            this.Cloudcov.Text = "Cloud cover";
             // 
             // RainLL
             // 
@@ -323,16 +323,16 @@
             this.TempLL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TempLL_LinkClicked);
             this.TempLL.MouseHover += new System.EventHandler(this.TempLL_MouseHover);
             // 
-            // WindSpeedLL
+            // CloudcoverLL
             // 
-            this.WindSpeedLL.AutoSize = true;
-            this.WindSpeedLL.Location = new System.Drawing.Point(82, 249);
-            this.WindSpeedLL.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
-            this.WindSpeedLL.Name = "WindSpeedLL";
-            this.WindSpeedLL.Size = new System.Drawing.Size(61, 25);
-            this.WindSpeedLL.TabIndex = 10;
-            this.WindSpeedLL.TabStop = true;
-            this.WindSpeedLL.Text = "0mph";
+            this.CloudcoverLL.AutoSize = true;
+            this.CloudcoverLL.Location = new System.Drawing.Point(82, 249);
+            this.CloudcoverLL.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.CloudcoverLL.Name = "CloudcoverLL";
+            this.CloudcoverLL.Size = new System.Drawing.Size(62, 50);
+            this.CloudcoverLL.TabIndex = 10;
+            this.CloudcoverLL.TabStop = true;
+            this.CloudcoverLL.Text = "Sunny Day";
             // 
             // WeatherFormData
             // 
@@ -344,7 +344,7 @@
             this.Controls.Add(this.Basic);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.HelpButton = true;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WeatherFormData";
@@ -379,10 +379,10 @@
         private System.Windows.Forms.TableLayoutPanel AdvanceTable;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label Cloudcov;
         private System.Windows.Forms.LinkLabel RainLL;
         private System.Windows.Forms.LinkLabel TempLL;
-        private System.Windows.Forms.LinkLabel WindSpeedLL;
+        private System.Windows.Forms.LinkLabel CloudcoverLL;
         private System.Windows.Forms.ToolTip ToolInfo;
     }
 }

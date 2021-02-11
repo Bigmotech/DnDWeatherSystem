@@ -2,42 +2,68 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using WeatherGen.WeatherSystem;
 
 namespace WeatherGen
 {
-    public partial class Form1 : Form
+    public partial class WorldMap : Form
     {
         private bool flag = false;
         private ContainerMap map;
         private WorldData world;
         private Bitmap mapPic;
         private OpenFileDialog dialog;
+        private CancellationTokenSource tokenSource;
+        public event EventHandler<ResizedEventArgs> ResizeStart;
+        public event EventHandler ResizeEnded;
 
-        public Form1()
+        public WorldMap()
         {
             InitializeComponent();
-            tableLayoutPanel1.AutoScroll = false;
+            this.ResizeBegin += WorldMap_ResizeBegin;
+            this.ResizeEnd += WorldMap_ResizeEnd;
+            tokenSource = new CancellationTokenSource();
         }
+
+        private void WorldMap_ResizeEnd(object sender, EventArgs e)
+        {
+
+            if (this.ResizeEnded != null)
+            {
+                this.ResizeEnded(null, null);
+            }
+            SizeCellsToPicture();
+
+
+        }
+
+        private void WorldMap_ResizeBegin(object sender, EventArgs e)
+        {
+            if (this.ResizeStart != null)
+            {
+                ResizedEventArgs rea = new ResizedEventArgs();
+                rea.Height = mapBox.Height;
+                rea.Width = mapBox.Width;
+                rea.Rows = world.col;
+                this.ResizeStart(null , rea);
+            }
+        }
+
         // test commit
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
+
+            mapBox.SizeMode = PictureBoxSizeMode.StretchImage;
             dialog = new OpenFileDialog();
             if (File.Exists(Properties.Settings.Default.picturePath))
             {
                 FitTableToPicture();
-                tableLayoutPanel1.CellPaint += TableLayoutPanel1_CellPaint;
-                tableLayoutPanel1.MouseClick += TableLayoutPanel1_MouseClick;
-                
-                
-            }
-            else
-            {
-                //LoadMap();
-                //FitTableToPicture();
-                
+
 
             }
 
@@ -46,84 +72,24 @@ namespace WeatherGen
 
         private void FitTableToPicture()
         {
-            
+
             mapPic = new Bitmap(Properties.Settings.Default.picturePath);
             mapBox.Image = mapPic;
-            mapBox.SizeMode = PictureBoxSizeMode.StretchImage;
-            
 
-        }
 
-        private void TableLayoutPanel1_MouseClick(object sender, MouseEventArgs e)
-        {
-            //throw new NotImplementedException();
-        }
-
-        private void TableLayoutPanel1_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
-        {
-            if (world.weatherMap != null )
-            {
-
-                using (var b = new SolidBrush(world.weatherMap[e.Column][e.Row].cloudCover))
-                {
-                    e.Graphics.FillRectangle(b, e.CellBounds);
-                }
-            }
         }
 
         private void StartLoad()
         {
             mapBox.Controls.Clear();
             flag = true;
-            mapBox.Controls.Add(tableLayoutPanel1);
-            tableLayoutPanel1.Dock = DockStyle.Fill;
-            tableLayoutPanel1.Location = new Point(0, 0);
-            tableLayoutPanel1.BackColor = Color.Transparent;
-            UpdateMap();
-        }
-        private void ReloadGrid()
-        {
-
+            SizeCellsToPicture();
         }
 
-        private void LoadCellMap()
-        {
-            tableLayoutPanel1.Visible = false;
-            tableLayoutPanel1.RowCount = 0;
-            tableLayoutPanel1.ColumnCount = 0;
-            tableLayoutPanel1.RowStyles.Clear();
-            tableLayoutPanel1.ColumnStyles.Clear();
-            
-            for (int i = 0; i < world.col; i++)
-            {
-                tableLayoutPanel1.RowCount++;
-                tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, (float)(100 / world.col)));
-                tableLayoutPanel1.ColumnCount++;
-                tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, (float)(100 / world.col)));
-
-            }
-            
-            tableLayoutPanel1.Visible = true;
-        }
-        private void UpdateMap()
-        {
-
-            tableLayoutPanel1.Visible = false;
-            tableLayoutPanel1.Controls.Clear();
-            for (int i = 0; i < world.weatherMap.Length; i++)
-            {
-                for (int j = 0; j < world.weatherMap[i].Length; j++)
-                {
-                    tableLayoutPanel1.Controls.Add(world.weatherMap[i][j], world.weatherMap[i][j].Cell.Coordinates[0], world.weatherMap[i][j].Cell.Coordinates[1]);
-                }
-            }
-            tableLayoutPanel1.Visible = true;
-
-        }
 
         private void LoadMap()
         {
-            
+
             dialog.Filter = "Image files (*.jpg, *.jpeg, *.png) | *.jpg; *.jpeg; *.png";
             dialog.Title = "Please select an image file.";
 
@@ -149,21 +115,13 @@ namespace WeatherGen
             FitTableToPicture();
         }
 
-        private void ResetButton_Click(object sender, EventArgs e)
-        {
-            Properties.Settings.Default.Reset();
-
-        }
-
-
-
         private void RunDayButton_Click(object sender, EventArgs e)
         {
             if (flag)
             {
                 map.RunFormDay(out world.weatherMap);
-                tableLayoutPanel1.Refresh();
                 Datelabel.Text = world.GetCurrentDayYear();
+                //SizeCellsToPicture();
 
             }
             else
@@ -186,8 +144,8 @@ namespace WeatherGen
             {
                 dialog.Filter = "World Json (*.json) | *.json;";
                 dialog.Title = "Please select a World Json.";
-
-                switch (dialog.ShowDialog())
+                DialogResult result = dialog.ShowDialog();
+                switch (result)
                 {
                     case DialogResult.Cancel:
 
@@ -202,10 +160,11 @@ namespace WeatherGen
                     case DialogResult.Yes:
                         world = JsonConvert.DeserializeObject<WorldData>(File.ReadAllText(dialog.FileName));
                         LoadWorldIntoApplicaiton(dialog.FileName, world.mapPath);
+                        SizeCellsToPicture();
 
                         break;
                 }
-                
+
 
             }
             catch (Exception ex)
@@ -221,8 +180,9 @@ namespace WeatherGen
             Properties.Settings.Default.picturePath = mapPath;
             Properties.Settings.Default.Save();
             this.Text = world.worldName;
-            LoadCellMap();
             map = new ContainerMap(world, false);
+            Datelabel.Text = world.GetCurrentDayYear();
+            AddEventsToCells();
             StartLoad();
             FitTableToPicture();
         }
@@ -232,22 +192,28 @@ namespace WeatherGen
             Properties.Settings.Default.picturePath = mapPath;
             Properties.Settings.Default.Save();
             this.Text = world.worldName;
-            LoadCellMap();
             map = new ContainerMap(world, false);
-            map.RunFormDay(out world.weatherMap);
+            Datelabel.Text = world.GetCurrentDayYear();
+            AddEventsToCells();
             StartLoad();
             FitTableToPicture();
             mapBox.Refresh();
         }
 
-        private void SaveAsMapButton_Click(object sender, EventArgs e)
+        private void AddEventsToCells()
         {
-
+            foreach(WeatherCelliconDisplay[] wArray in world.weatherMap)
+            {
+                foreach(WeatherCelliconDisplay w in wArray)
+                {
+                    w.AddEventsThroughForm(this);
+                }
+            }
         }
 
-        private void ClearPicBoxButton_Click(object sender, EventArgs e)
+        private void SaveAsMapButton_Click(object sender, EventArgs e)
         {
-            LoadCellMap();
+            //TO-DO ability to save as a different world
         }
 
         private void NewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -257,11 +223,50 @@ namespace WeatherGen
             {
                 case DialogResult.Yes:
                     world = newWorld.Tag as WorldData;
+                    foreach (WeatherCelliconDisplay[] v in world.weatherMap)
+                    {
+                        foreach (WeatherCelliconDisplay w in v)
+                        {
+                            w.Cell.LoadHistoryToChain();
+                        }
+                    }
                     LoadWorldIntoApplicaiton(world.mapPath);
+                    SizeCellsToPicture();
                     break;
             }
         }
 
+        private void SizeCellsToPicture()
+        {
+
+            if (world != null)
+            {
+                mapBox.Controls.Clear();
+                float cellHeight = (float)mapBox.Height / (float)world.col;
+                float cellWidth = (float)mapBox.Width / (float)world.col;
+                Size cellSize = new Size((int)cellWidth, (int)cellHeight);
+
+                for (int x = 0; x < world.col; x++)
+                {
+                    for (int y = 0; y < world.col; y++)
+                    {
+                        world.weatherMap[x][y].Size = cellSize;
+                        world.weatherMap[x][y].Location = new Point((int)(x * cellWidth), (int)(y * cellHeight));
+                        mapBox.Controls.Add(world.weatherMap[x][y]);
+
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public class ResizedEventArgs : EventArgs
+    {
+        public int Height { get; set; }
+        public int Width { get; set; }
+        public int Rows { get; set; }
     }
 }
 

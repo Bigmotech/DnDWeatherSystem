@@ -22,13 +22,16 @@ namespace WeatherGen.WeatherSystem
         [JsonProperty]
         public Color cloudCover { get; set; }
 
+
+
+
+
         public WeatherCelliconDisplay()
         {
             InitializeComponent();
             Cell = new CellData();
             this.Visible = false;
             
-            this.Dock = DockStyle.Fill;
         }
         public WeatherCelliconDisplay(CellData cell)
         {
@@ -48,12 +51,33 @@ namespace WeatherGen.WeatherSystem
                 case WeatherState.Rain:
 
                     cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
+                    this.BackColor = Color.FromArgb(50, Color.DeepSkyBlue);
                     break;
 
             }
-            this.Dock = DockStyle.Fill;
+
+        }
+        public void AddEventsThroughForm(WorldMap worldMap)
+        {
+            worldMap.ResizeStart += WorldMap_ResizeStart;
+            worldMap.ResizeEnded += WorldMap_ResizeEnded; 
         }
 
+        private void WorldMap_ResizeEnded(object sender, EventArgs e)
+        {
+            this.Visible = true;
+        }
+
+        private void WorldMap_ResizeStart(object sender, ResizedEventArgs e)
+        {
+            
+            float newCellHeight = (float)(e.Height / e.Rows);
+            float newCellWidth = (float)(e.Width / e.Rows);
+            this.Visible = false;
+            this.Size = new Size((int)newCellWidth, (int)newCellHeight);
+            this.Location = new Point((int)(newCellWidth * Cell.Coordinates[0]), (int)(newCellHeight * Cell.Coordinates[1]));
+
+        }
 
         private void ControlForm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
@@ -63,16 +87,17 @@ namespace WeatherGen.WeatherSystem
                     switch (Cell.Statechange)
                     {
                         case WeatherState.NoRain:
-                            
-                            cloudCover = Color.Transparent;
 
+                            cloudCover = Color.Transparent;
+                            this.BackColor = Color.Transparent;
                             break;
                         case WeatherState.Rain:
-                            
                             cloudCover = Color.FromArgb(50, Color.DeepSkyBlue);
+                            this.BackColor = Color.FromArgb(50, Color.DeepSkyBlue);
                             break;
 
                     }
+                    
                     break;
 
                 case "FirstDay":
@@ -120,6 +145,7 @@ namespace WeatherGen.WeatherSystem
         {
             OutgoingRainEvent?.Invoke(this, new OutgoingRainEventArgs(Cell));
         }
+       
     }
 
     public class OutgoingRainEventArgs : EventArgs
@@ -129,4 +155,6 @@ namespace WeatherGen.WeatherSystem
         public int Column { get; set; }
         public OutgoingRainEventArgs(CellData e) { cell = e; Row = e.Coordinates[0]; Column = e.Coordinates[1]; }
     }
+
+    
 }

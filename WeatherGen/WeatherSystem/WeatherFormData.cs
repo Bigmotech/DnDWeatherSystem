@@ -30,7 +30,7 @@ namespace WeatherGen.WeatherSystem
             IncomingText.Text = Cell.IncomingRain.ToString();
             TotalText.Text = Cell.TotalRain.ToString();
             RainLL.Text = ConditionsSystem.RainCondition(Cell.LocalRain);
-            //CloudDirectionLL.Text = ConditionsSystem.CloudDirection(Cell.Direction);
+            CloudcoverLL.Text = ConditionsSystem.CloudDirection(Cell);
             TempLL.Text = Cell.CurrentTemp.ToString();
             //WindSpeedLL.Text = ConditionsSystem.WindCondition(Cell.TempRange);
             if (Cell.Statechange.Equals(WeatherState.Rain))
@@ -126,11 +126,7 @@ namespace WeatherGen.WeatherSystem
 
         private void RainLL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Explained explained = new Explained(ConditionsSystem.RainCondition(Cell.LocalRain))
-            {
-                Location = new Point(RainLL.Location.X, RainLL.Location.Y)
-            };
-            explained.Show();
+
 
         }
 

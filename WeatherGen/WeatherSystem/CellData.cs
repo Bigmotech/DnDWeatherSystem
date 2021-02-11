@@ -19,8 +19,8 @@ namespace WeatherGen.WeatherSystem
 
 
         //Fields
-        public List<WeatherState> WeatherHistory;
-        public List<WeatherState> n;
+        public List<WeatherState> WeatherHistory = new List<WeatherState>();
+        public List<WeatherState> n = new List<WeatherState>();
         private bool _firstDay = true;
         private WeatherState _prevState;
         private WeatherState _statechange;
@@ -73,8 +73,7 @@ namespace WeatherGen.WeatherSystem
         //Consturctors
         public CellData()
         {
-            WeatherHistory = new List<WeatherState>();
-            n = new List<WeatherState>();
+            
         }
         public CellData(Random r)
         {
@@ -110,6 +109,15 @@ namespace WeatherGen.WeatherSystem
         public void SetAdjacentCells()
         {
 
+        }
+        public void LoadHistoryToChain()
+        {
+            for (int i = WeatherHistory.Count; i > 0; i--)
+            {
+                if (i - 2 < 0)
+                    break;
+                chainRain.Add(WeatherHistory[i - 1], WeatherHistory[i - 2]);
+            }
         }
     }
 
